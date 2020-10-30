@@ -7,4 +7,10 @@ public abstract class Payment {
     private Date paid;
     private float total;
     private String details;
+    protected Account account;
+    
+    
+    public Account getAccount() {
+        return account;
+    }
 }

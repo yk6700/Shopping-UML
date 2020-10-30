@@ -29,5 +29,8 @@ public class WebUser {
     public UserState getState() {
         return state;
     }
-
+    
+    public Customer getCustomer() {
+        return customer;
+    }
 }

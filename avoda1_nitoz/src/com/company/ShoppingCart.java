@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ShoppingCart {
@@ -9,10 +10,10 @@ public class ShoppingCart {
     private ArrayList<LineItem> lineItems;
 
     public ShoppingCart(Date created){
-        this.Date = date;
+        this.created=created;
     }
 
-    pubic setWebUser(WebUser webUser){
+    public void setWebUser(WebUser webUser){
         this.webUser = webUser;
     }
 
