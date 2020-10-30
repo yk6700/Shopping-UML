@@ -7,6 +7,7 @@ import java.util.LinkedList;
 public class Product {
     private String id;
     private String name;
+<<<<<<< HEAD
     private Supplier supplier;
     private ArrayList<LineItem> lineItems;
     private PremuimAccount premuimAccount;
@@ -60,4 +61,12 @@ public class Product {
         lineItems.add(lineItem);
         return true;
     }
+=======
+    private PremuimAccount premuimAccount;
+    
+    
+    public PremuimAccount getPremuimAccount() {
+        return premuimAccount;
+    }
+>>>>>>> 90844c3b8496084cb228fafa7e616d24d1cfbbd3
 }

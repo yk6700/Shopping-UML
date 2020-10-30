@@ -9,4 +9,10 @@ public class Order {
     private Address ship_to;
     private OrderStatus status;
     private float total;
+    private Account account;
+    
+    
+    public Account getAccount() {
+        return account;
+    }
 }
