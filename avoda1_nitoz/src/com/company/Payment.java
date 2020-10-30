@@ -7,9 +7,6 @@ public abstract class Payment {
     protected Date paid;
     protected float total;
     protected String details;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     private Order order;
     private Account account;
 
@@ -45,10 +42,4 @@ public abstract class Payment {
     public Account getAccount() {
         return account;
     }
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }

@@ -4,7 +4,6 @@ public class LineItem {
     private int quantity;
     private int price;
     private ShoppingCart shoppingCart;
-<<<<<<< HEAD
     private Order order;
     private Product product;
 
@@ -46,11 +45,8 @@ public class LineItem {
     public Product getProduct() {
         return product;
     }
-=======
-    
-    
+
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
->>>>>>> 90844c3b8496084cb228fafa7e616d24d1cfbbd3
 }
