@@ -3,13 +3,42 @@ package com.company;
 import java.util.Date;
 
 public abstract class Payment {
-    private String id;
-    private Date paid;
-    private float total;
-    private String details;
-    protected Account account;
-    
-    
+    protected String id;
+    protected Date paid;
+    protected float total;
+    protected String details;
+    private Order order;
+    private Account account;
+
+    public Payment(String id, Date paid, float total, String details, Order order, Account account) {
+        this.id = id;
+        this.paid = paid;
+        this.total = total;
+        this.details = details;
+        this.order = order;
+        this.account = account;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Date getPaid() {
+        return paid;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
     public Account getAccount() {
         return account;
     }
