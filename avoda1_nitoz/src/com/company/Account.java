@@ -54,4 +54,8 @@ public class Account {
     public Customer getCustomer() {
         return customer;
     }
+    
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
 }

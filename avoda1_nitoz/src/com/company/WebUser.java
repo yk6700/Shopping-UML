@@ -6,8 +6,8 @@ public class WebUser {
     private String login_id;
     private String password;
     private UserState state;
-
     private Customer customer;
+    private ShoppingCart shoppingCart;
 
     public WebUser(String login_id,String password,Customer c){
         this.login_id = login_id;
@@ -39,5 +39,18 @@ public class WebUser {
     
     public Customer getCustomer() {
         return customer;
+    }
+    
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        if(shoppingCart.getWebUser()==null){
+            this.shoppingCart=shoppingCart;
+        }
+        else{
+            throw new RuntimeException("Shopping cart cannot be connected to more than one web user");
+        }
+    }
+    
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 }
