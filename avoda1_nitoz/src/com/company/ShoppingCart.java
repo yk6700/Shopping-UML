@@ -21,5 +21,8 @@ public class ShoppingCart {
     public Date getCreated() {
         return created;
     }
-
+    
+    public Account getAccount() {
+        return account;
+    }
 }

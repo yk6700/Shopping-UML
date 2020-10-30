@@ -49,4 +49,8 @@ public class Customer {
             throw new RuntimeException("Web user can be connected only to one customer");
         }
     }
+    
+    public WebUser getWebUser() {
+        return webUser;
+    }
 }
