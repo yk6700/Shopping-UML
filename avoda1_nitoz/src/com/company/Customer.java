@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Customer {
@@ -17,9 +18,9 @@ public class Customer {
         this.email = email;
 
         if (isPremium)
-            account = new PremuimAccount(id, null, true, null, null, balance, this);
+            account = new PremuimAccount(id, null, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
         else
-            account = new Account(id, null, true, null, null, balance,  this);
+            account = new Account(id, null, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
     }
     
     public String getId() {
@@ -53,5 +54,21 @@ public class Customer {
     
     public WebUser getWebUser() {
         return webUser;
+    }
+    
+    @Override
+    public String toString() {
+        return "Customer"+this.id;
+    }
+    
+    public void printCustomer(){
+        System.out.println(this);
+        System.out.println("Address:"+this.address.getAddress());
+        System.out.println("Phone:"+phone);
+        System.out.println("Email:"+email);
+        System.out.println(account);
+        if(webUser!=null){
+            System.out.println(webUser);
+        }
     }
 }

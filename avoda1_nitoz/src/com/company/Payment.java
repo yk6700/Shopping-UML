@@ -69,4 +69,18 @@ public abstract class Payment {
         this.account = account;
         
     }
+    
+    @Override
+    public String toString() {
+        return "Payment"+id;
+    }
+    
+    public void printPayment(){
+        System.out.println(this);
+        System.out.println("Paid Date:"+paid.getTime());
+        System.out.println("Total:"+total);
+        System.out.println("Details:"+details);
+        System.out.println(account);
+        System.out.println(order);
+    }
 }

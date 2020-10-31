@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Order {
     private String number;
-    private Date Ordered;
-    private Date shipprd;
+    private Date ordered;
+    private Date shipped;
     private Address ship_to;
     private OrderStatus status;
     private float total;
@@ -16,8 +16,8 @@ public class Order {
 
     public Order(String number, Date ordered, Date shipprd, Address ship_to, OrderStatus status, float total, Account account) {
         this.number = number;
-        Ordered = ordered;
-        this.shipprd = shipprd;
+        this.ordered = ordered;
+        this.shipped = shipprd;
         this.ship_to = ship_to;
         this.status = status;
         this.total = total;
@@ -62,5 +62,24 @@ public class Order {
     
     public ArrayList<Payment> getPaymentsArray() {
         return paymentsArray;
+    }
+    
+    @Override
+    public String toString() {
+        return "Order"+number;
+    }
+    
+    public void printOrder(){
+        System.out.println(this);
+        System.out.println("Ordered Date:"+ordered);
+        System.out.println("shipped:"+shipped);
+        System.out.println("ship to:"+ship_to.getAddress());
+        System.out.println("Status:"+status.name());
+        System.out.println("total:"+total);
+        System.out.println(account);
+        for(Payment p:paymentsArray){
+            System.out.println(p);
+        }
+        
     }
 }

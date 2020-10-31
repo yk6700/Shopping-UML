@@ -57,7 +57,19 @@ public class WebUser {
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
-    /*public setUserState(UserState state){
-        this.state = state;
-    }*/
+    
+    @Override
+    public String toString() {
+        return "WebUser"+this.login_id;
+    }
+    
+    public void printWebUser(){
+        System.out.println(this);
+        System.out.println("Password:"+this.password);
+        System.out.println("State:"+state);
+        System.out.println(customer);
+        if(shoppingCart!=null){
+            System.out.println(shoppingCart);
+        }
+    }
 }
