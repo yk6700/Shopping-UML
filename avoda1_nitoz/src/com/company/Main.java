@@ -1,5 +1,8 @@
 package com.company;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -12,7 +15,7 @@ public class Main {
     public static HashMap<String, Payment> paymentHashMap = new HashMap<>();
     public static HashMap<String, Customer> customerHashMap = new HashMap<>();
     public static HashMap<String, WebUser> webUserHashMap = new HashMap<>();
-    public static HashMap<String, ShoppingCart> shoppingCarts = new HashMap<>();
+    public static ArrayList<ShoppingCart> shoppingCarts = new ArrayList<>();
     
     
     public static void main(String[] args) {
@@ -163,7 +166,7 @@ public class Main {
         throw new NotImplementedException();
     }
 
-    public static void linkToPremiumAccount(){
+    public static void linkToPremiumAccount(String name){
         throw new NotImplementedException();
     }
 
@@ -191,7 +194,7 @@ public class Main {
         throw new NotImplementedException();
     }
 
-    public static void displaySpecificObject(){
+    public static void displaySpecificObject(String id){
         throw new NotImplementedException();
     }
 }
