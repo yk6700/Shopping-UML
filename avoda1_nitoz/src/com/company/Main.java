@@ -14,6 +14,7 @@ public class Main {
     public static HashMap<String, WebUser> webUserHashMap = new HashMap<>();
     public static ArrayList<ShoppingCart> shoppingCarts = new ArrayList<>();
 
+
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
         productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("Moshe")));
@@ -22,9 +23,8 @@ public class Main {
 
     }
 
-    
-    
-    public static void addUser(String login_id, String password, Address address, String phone, String email, int balance, Boolean isPremium){
+
+    public static void addUser(String login_id, String password, Address address, String phone, String email, int balance, boolean isPremium){
         WebUser webUser = new WebUser(login_id , password, address, phone, email, balance, isPremium);
         webUserHashMap.put(webUser.getLogin_id(), webUser);
         customerHashMap.put(webUser.getLogin_id(),webUser.getCustomer());
