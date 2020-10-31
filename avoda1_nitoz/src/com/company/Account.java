@@ -15,7 +15,7 @@ public class Account {
     protected ArrayList<Payment> payments;
     protected ArrayList<Order> orders;
     
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, ShoppingCart shoppingCart, Customer customer) {
+    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
