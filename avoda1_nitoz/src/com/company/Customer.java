@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Customer {
@@ -10,17 +9,17 @@ public class Customer {
     private String email;
     private Account account;
     private WebUser webUser;
-    
-    public Customer(String id, Address address, String phone, String email, Boolean isPremium, int balance) {
+
+    public Customer(String id, Address address, String phone, String email, int balance, Boolean isPremium) {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.email = email;
 
         if (isPremium)
-            account = new PremuimAccount(id, address.getAddress(), false, Calendar.getInstance().getTime(), null, balance, this);
+            account = new PremuimAccount(id, null, true, null, null, balance, this);
         else
-            account = new Account(id, address.getAddress(), false, Calendar.getInstance().getTime(), null, balance, this);
+            account = new Account(id, null, true, null, null, balance,  this);
     }
     
     public String getId() {

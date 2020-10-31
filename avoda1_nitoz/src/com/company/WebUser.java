@@ -9,13 +9,13 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password, Address address, String phone, String email, Boolean isPremium, int balance){
+    public WebUser(String login_id, String password, Address address, String phone, String email,int balance, Boolean isPremium){
         this.login_id = login_id;
         this.password = password;
         this.state = New;
 
-        customer = new Customer(login_id, address, phone, email, isPremium, balance);
-
+        customer = new Customer(login_id, address, phone, email, balance, isPremium);
+        shoppingCart = customer.getAccount().getShoppingCart();
     }
 
     public boolean checkPassword(String check){
@@ -33,11 +33,11 @@ public class WebUser {
     public UserState getState() {
         return state;
     }
-    
+
     public Customer getCustomer() {
         return customer;
     }
-    
+
     public void setShoppingCart(ShoppingCart shoppingCart) {
         if(shoppingCart.getWebUser()==null){
             this.shoppingCart=shoppingCart;
@@ -46,11 +46,8 @@ public class WebUser {
             throw new RuntimeException("Shopping cart cannot be connected to more than one web user");
         }
     }
-    
+
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
-    }
-    public setUserState(UserState state){
-        this.state = state;
     }
 }
