@@ -55,4 +55,12 @@ public class Order {
         else
             return false;
     }
+    
+    public String getNumber() {
+        return number;
+    }
+    
+    public ArrayList<Payment> getPaymentsArray() {
+        return paymentsArray;
+    }
 }

@@ -16,7 +16,7 @@ public class Main {
     public static HashMap<String, Customer> customerHashMap = new HashMap<>();
     public static HashMap<String, WebUser> webUserHashMap = new HashMap<>();
     public static ArrayList<ShoppingCart> shoppingCarts = new ArrayList<>();
-    
+    public static HashMap<String,Order> orderHashMap=new HashMap<>();
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
@@ -153,6 +153,20 @@ public class Main {
         WebUser webUser = webUserHashMap.get(id);
         if(webUser != null || webUser instanceof WebUser)return;
         //webUser.state = Banned;
+        shoppingCarts.remove(webUser.getShoppingCart());
+        Account toRemove=webUser.getCustomer().getAccount();
+        for(Order o:toRemove.orders){
+            if(orderHashMap.containsKey(o.getNumber())){
+                for(Payment p:o.getPaymentsArray()){
+                    if(paymentHashMap.containsKey(p.id)){
+                        paymentHashMap.remove(p.id);
+                    }
+                }
+                orderHashMap.remove(o.getNumber());
+            }
+        }
+        accountHashMap.remove(toRemove);
+        customerHashMap.remove(webUser.getCustomer().getId());
         webUserHashMap.remove(id);
     }
     
@@ -194,6 +208,7 @@ public class Main {
         if(!productHashMap.containsKey(id)){
             Supplier supplier = new Supplier(supplier_id,supplier_name);
             productHashMap.put(id, new Product(id, name, supplier));
+            supplierHashMap.put(supplier_id,supplier);
             return true;
         }
         else
