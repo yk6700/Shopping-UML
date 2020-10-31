@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Calendar;
+
 import static com.company.UserState.New;
 
 public class WebUser {
@@ -9,13 +11,14 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password, Address address, String phone, String email,int balance, Boolean isPremium){
+    public WebUser(String login_id, String password, Address address, String phone, String email, Boolean isPremium, int balance){
         this.login_id = login_id;
         this.password = password;
         this.state = New;
 
         customer = new Customer(login_id, address, phone, email, balance, isPremium);
-        shoppingCart = customer.getAccount().getShoppingCart();
+        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), this);
+
     }
 
     public boolean checkPassword(String check){
@@ -50,4 +53,7 @@ public class WebUser {
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
+    /*public setUserState(UserState state){
+        this.state = state;
+    }*/
 }

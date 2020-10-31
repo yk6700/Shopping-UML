@@ -11,15 +11,22 @@ public class ShoppingCart {
     
     public ShoppingCart(Date created, Account account, WebUser webUser) {
         this.created = created;
+        this.account = account;
+        this.webUser = webUser;
+
+        this.account.setShoppingCart(this);
+
         lineItems=new ArrayList<>();
-        if(account.getShoppingCart()==null && webUser.getShoppingCart()==null){
+
+
+        /*if(account.getShoppingCart()==null && webUser.getShoppingCart()==null){
             this.webUser=webUser;
             this.webUser.setShoppingCart(this);
             this.account=account;
         }
         else{
             throw new RuntimeException("Shopping cart can be connected only to one account and one web user");
-        }
+        }*/
     }
     
     public boolean addLineItem(LineItem l){
