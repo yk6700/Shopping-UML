@@ -17,6 +17,8 @@ public abstract class Payment {
         this.details = details;
         this.order = order;
         this.account = account;
+        order.addPayment(this);
+        account.addPayment(this);
     }
 
     public String getId() {
