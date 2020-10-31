@@ -13,4 +13,15 @@ public class ImmediatePayment extends Payment {
     public Boolean getPhoneConfirmation() {
         return phoneConfirmation;
     }
+    
+    @Override
+    public String toString() {
+        return "ImmediatePayment"+id;
+    }
+    
+    public void printPayment(){
+        super.printPayment();
+        System.out.println(this);
+        System.out.println("Phone confirmation:"+phoneConfirmation);
+    }
 }

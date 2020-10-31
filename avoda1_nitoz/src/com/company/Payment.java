@@ -70,13 +70,8 @@ public abstract class Payment {
         
     }
     
-    @Override
-    public String toString() {
-        return "Payment"+id;
-    }
     
     public void printPayment(){
-        System.out.println(this);
         System.out.println("Paid Date:"+paid.getTime());
         System.out.println("Total:"+total);
         System.out.println("Details:"+details);

@@ -13,4 +13,15 @@ public class DelayedPayment extends Payment{
     public Date getPaymentDate() {
         return paymentDate;
     }
+    
+    @Override
+    public String toString() {
+        return "DelayedPayment"+id;
+    }
+    
+    public void printPayment(){
+        super.printPayment();
+        System.out.println(this);
+        System.out.println("Payment Date:"+paymentDate);
+    }
 }
