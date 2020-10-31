@@ -28,7 +28,15 @@ public class ShoppingCart {
             throw new RuntimeException("Shopping cart can be connected only to one account and one web user");
         }*/
     }
-    
+
+    public boolean removeLineItem(LineItem lineItem){
+        if(lineItem != null && lineItems.contains(lineItem)) {
+            lineItems.remove(lineItem);
+            return true;
+        }
+        return false;
+    }
+
     public boolean addLineItem(LineItem l){
         if(this.lineItems.contains(l)){
             return false;

@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,6 +24,10 @@ public class Product {
         }
 
         lineItems = new ArrayList<>();
+    }
+
+    public void setLineItems(ArrayList<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 
     public Supplier getSupplier() {
@@ -59,6 +65,10 @@ public class Product {
 
         lineItems.add(lineItem);
         return true;
+    }
+
+    public void printProduct(){
+        throw new NotImplementedException();
     }
 }
 

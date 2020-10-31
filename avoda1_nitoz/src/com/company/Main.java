@@ -2,6 +2,7 @@ package com.company;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -17,6 +18,7 @@ public class Main {
     public static HashMap<String, WebUser> webUserHashMap = new HashMap<>();
     public static ArrayList<ShoppingCart> shoppingCarts = new ArrayList<>();
     public static HashMap<String,Order> orderHashMap=new HashMap<>();
+    public static ArrayList<LineItem> LineItemsList = new ArrayList<>();
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
@@ -229,9 +231,21 @@ public class Main {
             return false;
     }
 
-    public static boolean deleteProduct(String id){
-        if(productHashMap.containsKey(id)){
-            productHashMap.remove(id);
+    public static boolean deleteProduct(String name){
+        if(productHashMap.containsKey(name)){
+            Product product = productHashMap.get(name);
+            ArrayList<LineItem> lineitems = product.getLineItems();
+            for (LineItem i : lineitems) {
+                i.getShoppingCart().removeLineItem(i);
+                i.getOrder().removeLineItem(i);
+                i.setProduct(null);
+                LineItemsList.remove(i);
+            }
+            product.setLineItems(null);
+            product.getSupplier().getProducts().remove(name);
+            if(product.getPremuimAccount() != null)
+                product.getPremuimAccount().getProducts().remove(product);
+            productHashMap.remove(name);
             return true;
         }
         else
@@ -240,11 +254,70 @@ public class Main {
 
 
     public static void displayObjects(){
-        throw new NotImplementedException();
+        for (Supplier s : supplierHashMap.values())
+            s.toString();
+        for (Product p : productHashMap.values())
+            p.toString();
+        for (Account a : accountHashMap.values())
+            a.toString();
+        for (Payment p : paymentHashMap.values())
+            p.toString();
+        for (Customer c : customerHashMap.values())
+            c.toString();
+        for (WebUser w : webUserHashMap.values())
+            w.toString();
+        for (Order o : orderHashMap.values())
+            o.toString();
+        for (ShoppingCart s : shoppingCarts)
+            s.toString();
+        for (LineItem l : LineItemsList)
+            l.toString();
     }
 
     public static void displaySpecificObject(String id){
-        throw new NotImplementedException();
+        for (Supplier s : supplierHashMap.values()) {
+            if (s.getId().equals(id)) {
+                s.printSupplier();
+                return;
+            }
+        }
+        for (Product p : productHashMap.values()) {
+            if (p.getId().equals(id)) {
+                p.printProduct();
+                return;
+            }
+        }
+        for (Account a : accountHashMap.values()) {
+            if(a.getId().equals(id)) {
+                a.printAccount();
+                return;
+            }
+        }
+        for (Payment p : paymentHashMap.values()){
+            if(p.getId().equals(id)) {
+                p.printPayment();
+                return;
+            }
+        }
+        for (Customer c : customerHashMap.values()){
+            if(c.getId().equals(id)) {
+                c.printCustomer();
+                return;
+            }
+        }
+
+        for (WebUser w : webUserHashMap.values()){
+            if(w.getLogin_id().equals(id)) {
+                w.printWebUser();
+                return;
+            }
+        }
+        for (Order o : orderHashMap.values()){
+            if(o.getNumber().equals(id)) {
+                o.printOrder();
+                return;
+            }
+        }
     }
 }
 

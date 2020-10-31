@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,6 +35,10 @@ public class Supplier {
 
         products.put(product.getId(), product);
         return true;
+    }
+
+    public void printSupplier(){
+        throw new NotImplementedException();
     }
 
 }

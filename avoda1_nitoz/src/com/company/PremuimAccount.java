@@ -15,4 +15,8 @@ public class PremuimAccount extends Account {
     public void addProduct(Product p){
         this.products.add(p);
     }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
 }

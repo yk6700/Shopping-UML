@@ -44,6 +44,14 @@ public class Order {
             return false;
     }
 
+    public boolean removeLineItem(LineItem lineItem){
+        if(lineItem != null && lineArray.contains(lineItem)) {
+            lineArray.remove(lineItem);
+            return true;
+        }
+        return false;
+    }
+
     public Boolean addPayment(Payment payment)
     {
         if (payment.getOrder() == null)
