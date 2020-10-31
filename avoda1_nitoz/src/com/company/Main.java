@@ -123,13 +123,22 @@ public class Main {
         String supplierName=in.nextLine();
         addProduct(id,productName,supplierId,supplierName);
     }
-    
+
     
     public static void addUser(String id,String password,boolean premiumAccount,String address,String phone,String email,int balance){
+        WebUser webUser = new WebUser(login_id , password, address, phone, email, isPremium, balance);
+        webUserHashMap.put(webUser.getLogin_id(), webUser);
+        customerHashMap.put(webUser.getLogin_id(),webUser.getCustomer());
+        accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());
+        shoppingCarts.add(webUser.getShoppingCart());s
     }
     
     public static void removeUser(String id){
-    
+        WebUser webUser = webUserHashMap.get(id);
+        if(webUser != null || webUser instanceof WebUser)return;
+        //webUser.state = Banned;
+        webUserHashMap.remove(id);
+
     }
     
     public static void login(String id,String password){
