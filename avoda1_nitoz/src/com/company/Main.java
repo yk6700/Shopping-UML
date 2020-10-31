@@ -20,7 +20,16 @@ public class Main {
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
-        productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("Moshe")));
+        productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("123")));
+        productHashMap.put("Ramen", new Product("Ramen", "Ramen", supplierHashMap.get("123")));
+
+        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("fuck you"), "0521111111", "Dani@bgu", false, 0));
+        webUserHashMap.put("Dana", new WebUser("Dana", "Dana123", new Address("Beer Sheba"), "0523456789", "Dana@bgu", true, 0));
+
+        accountHashMap.put("Dani", webUserHashMap.get("dani").getCustomer().getAccount());
+        accountHashMap.put("Dana", webUserHashMap.get("dana").getCustomer().getAccount());
+
+        ((PremuimAccount)accountHashMap.get("Dana")).addProduct(productHashMap.get("Bamba"));
         
         String command="";
         Scanner in=new Scanner(System.in);
@@ -145,21 +154,32 @@ public class Main {
         if(webUser != null || webUser instanceof WebUser)return;
         //webUser.state = Banned;
         webUserHashMap.remove(id);
-        
-        
     }
     
     
-    public static void login(String id,String password){
-    
+    public static boolean login(String id,String password) { //TODO should i check if he is already logged in?
+        if (webUserHashMap.containsKey(id)) {
+            WebUser webuser = webUserHashMap.get(id);
+            if (webuser.getLogin_id().equals(id) && webuser.checkPassword(password)) {
+                webuser.setState(UserState.Active);
+                return true;
+            }
+        }
+        return false;
     }
-    
-    public static void logout(String id){
-    
+
+
+    public static boolean logout(String id){ //TODO should i check if he is already logged out?
+        if (webUserHashMap.containsKey(id)) {
+            WebUser webuser = webUserHashMap.get(id);
+            webuser.setState(UserState.Blocked);
+            return true;
+        }
+        return false;
     }
-    
+
     public static void makeOrder(){
-    
+        throw new NotImplementedException();
     }
 
     public static void displayOrder(){ //from here
@@ -198,3 +218,4 @@ public class Main {
         throw new NotImplementedException();
     }
 }
+

@@ -50,6 +50,10 @@ public class WebUser {
         }
     }
 
+    public void setState(UserState state) {
+        this.state = state;
+    }
+
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
