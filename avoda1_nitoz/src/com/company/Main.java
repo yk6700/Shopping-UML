@@ -11,6 +11,9 @@ public class Main {
     public static HashMap<String, Account> accountHashMap = new HashMap<>();
     public static HashMap<String, Payment> paymentHashMap = new HashMap<>();
     public static HashMap<String, Customer> customerHashMap = new HashMap<>();
+    public static HashMap<String, WebUser> webUserHashMap = new HashMap<>();
+    public static HashMap<String, ShoppingCart> shoppingCarts = new HashMap<>();
+    
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
@@ -90,7 +93,8 @@ public class Main {
             premiumAccount=true;
         }
         System.out.println("Please enter your address");
-        String address=in.nextLine();
+        String addressStr=in.nextLine();
+        Address address=new Address(addressStr);
         System.out.println("Please enter your phone number");
         String phone=in.nextLine();
         System.out.println("Please enter your email");
@@ -125,12 +129,23 @@ public class Main {
     }
     
     
-    public static void addUser(String id,String password,boolean premiumAccount,String address,String phone,String email,int balance){
+    public static void addUser(String login_id, String password,boolean isPremium, Address address, String phone, String email, int balance ){
+        WebUser webUser = new WebUser(login_id , password, address, phone, email, isPremium, balance);
+        webUserHashMap.put(webUser.getLogin_id(), webUser);
+        customerHashMap.put(webUser.getLogin_id(),webUser.getCustomer());
+        accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());
+        shoppingCarts.add(webUser.getShoppingCart());
     }
     
     public static void removeUser(String id){
-    
+        WebUser webUser = webUserHashMap.get(id);
+        if(webUser != null || webUser instanceof WebUser)return;
+        //webUser.state = Banned;
+        webUserHashMap.remove(id);
+        
+        
     }
+    
     
     public static void login(String id,String password){
     
