@@ -24,6 +24,7 @@ public class Account {
         this.balance = balance;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
+
         if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
             this.customer = customer;
