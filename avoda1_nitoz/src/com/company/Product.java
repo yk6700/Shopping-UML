@@ -7,7 +7,6 @@ import java.util.LinkedList;
 public class Product {
     private String id;
     private String name;
-<<<<<<< HEAD
     private Supplier supplier;
     private ArrayList<LineItem> lineItems;
     private PremuimAccount premuimAccount;
@@ -18,14 +17,14 @@ public class Product {
 
         this.supplier = supplier;
         boolean added = this.supplier.addProduct(this);
-        if (!added){
+        if (!added) {
             throw new RuntimeException("Product already contained in supplier");
         }
 
         lineItems = new ArrayList<>();
     }
 
-    public Supplier getSupplier(){
+    public Supplier getSupplier() {
         return supplier;
     }
 
@@ -45,8 +44,8 @@ public class Product {
         return premuimAccount;
     }
 
-    public boolean addPremuimAccount(PremuimAccount pa){
-        if (premuimAccount != null){
+    public boolean addPremuimAccount(PremuimAccount pa) {
+        if (premuimAccount != null) {
             return false;
         }
 
@@ -54,19 +53,12 @@ public class Product {
         return true;
     }
 
-    public boolean addLineItem(LineItem lineItem){
+    public boolean addLineItem(LineItem lineItem) {
         if (lineItems.contains(lineItem))
             return false;
 
         lineItems.add(lineItem);
         return true;
     }
-=======
-    private PremuimAccount premuimAccount;
-    
-    
-    public PremuimAccount getPremuimAccount() {
-        return premuimAccount;
-    }
->>>>>>> 90844c3b8496084cb228fafa7e616d24d1cfbbd3
 }
+
