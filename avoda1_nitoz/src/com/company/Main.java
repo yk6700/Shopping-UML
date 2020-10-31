@@ -26,15 +26,29 @@ public class Main {
         webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("fuck you"), "0521111111", "Dani@bgu", false, 0));
         webUserHashMap.put("Dana", new WebUser("Dana", "Dana123", new Address("Beer Sheba"), "0523456789", "Dana@bgu", true, 0));
 
-        accountHashMap.put("Dani", webUserHashMap.get("dani").getCustomer().getAccount());
-        accountHashMap.put("Dana", webUserHashMap.get("dana").getCustomer().getAccount());
+        accountHashMap.put("Dani", webUserHashMap.get("Dani").getCustomer().getAccount());
+        accountHashMap.put("Dana", webUserHashMap.get("Dana").getCustomer().getAccount());
 
         ((PremuimAccount)accountHashMap.get("Dana")).addProduct(productHashMap.get("Bamba"));
         
         String command="";
         Scanner in=new Scanner(System.in);
         do{
-            System.out.println("Please enter your command or type exit to exit");
+            System.out.println("Please enter your command or type exit to exit\nOptions:");
+            System.out.println("1. Add WebUser");
+            System.out.println("2. Remove WebUser");
+            System.out.println("3. Login WebUser");
+            System.out.println("4. Login WebUser");
+            System.out.println("5. Logout WebUser");
+            System.out.println("6. Make order");
+            System.out.println("7. Display order");
+            System.out.println("8. Link Product");
+            System.out.println("9. Add Product");
+            System.out.println("10. Delete Product");
+            System.out.println("11. Show All Objects");
+            System.out.println("12. Show Object Id");
+            System.out.println("13. exit");
+
             command=in.nextLine();
             if(command.contains("Add WebUser")){
                 String id=getId(command);
@@ -79,11 +93,11 @@ public class Main {
                 deleteProduct(name);
                 continue;
             }
-            if(command.equals("ShowAllObjects")){
+            if(command.equals("Show All Objects")){
                 displayObjects();
                 continue;
             }
-            if(command.contains("ShowObjectId")){
+            if(command.contains("Show Object Id")){
                 String id=command.substring(command.lastIndexOf("Id")+3);
                 displaySpecificObject(id);
             }
