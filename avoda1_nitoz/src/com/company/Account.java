@@ -22,16 +22,17 @@ public class Account {
         this.open = open;
         this.closed = closed;
         this.balance = balance;
+        this.customer = customer;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
 
-        if(shoppingCart.getAccount()==null && customer.getAccount()==null){
+        /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
             this.customer = customer;
         }
         else{
             throw new RuntimeException("Account can only be connected to one shopping cart and one customer");
-        }
+        }*/
     }
     
     public void addPayment(Payment p){

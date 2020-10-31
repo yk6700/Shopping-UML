@@ -31,9 +31,9 @@ public class Main {
         accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());
         shoppingCarts.add(webUser.getShoppingCart());
     }
-    
+
     public static void removeUser(){
-    
+
     }
     
     public static void login(){

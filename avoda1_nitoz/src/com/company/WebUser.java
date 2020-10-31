@@ -33,11 +33,11 @@ public class WebUser {
     public UserState getState() {
         return state;
     }
-    
+
     public Customer getCustomer() {
         return customer;
     }
-    
+
     public void setShoppingCart(ShoppingCart shoppingCart) {
         if(shoppingCart.getWebUser()==null){
             this.shoppingCart=shoppingCart;
@@ -46,7 +46,7 @@ public class WebUser {
             throw new RuntimeException("Shopping cart cannot be connected to more than one web user");
         }
     }
-    
+
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }

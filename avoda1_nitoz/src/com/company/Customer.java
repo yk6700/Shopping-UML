@@ -9,7 +9,7 @@ public class Customer {
     private String email;
     private Account account;
     private WebUser webUser;
-    
+
     public Customer(String id, Address address, String phone, String email, int balance, Boolean isPremium) {
         this.id = id;
         this.address = address;
@@ -17,9 +17,9 @@ public class Customer {
         this.email = email;
 
         if (isPremium)
-            account = new PremuimAccount(id, null, true, null, null, balance, null, this);
+            account = new PremuimAccount(id, null, true, null, null, balance, this);
         else
-            account = new Account(id, null, true, null, null, balance, null, this);
+            account = new Account(id, null, true, null, null, balance,  this);
     }
     
     public String getId() {
