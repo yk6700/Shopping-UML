@@ -10,16 +10,16 @@ public class Customer {
     private Account account;
     private WebUser webUser;
     
-    public Customer(String id, Address address, String phone, String email, Boolean isPremium) {
+    public Customer(String id, Address address, String phone, String email, int balance, Boolean isPremium) {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.email = email;
 
         if (isPremium)
-            account = new PremuimAccount(id, null, true, null, null, 0, null, this);
+            account = new PremuimAccount(id, null, true, null, null, balance, null, this);
         else
-            account = new Account(id, null, true, null, null, 0, null, this);
+            account = new Account(id, null, true, null, null, balance, null, this);
     }
     
     public String getId() {
