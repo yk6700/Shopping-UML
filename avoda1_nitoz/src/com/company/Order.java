@@ -24,6 +24,8 @@ public class Order {
         this.account = account;
         this.lineArray = new ArrayList<>();
         this.paymentsArray = new ArrayList<>();
+
+        this.account.addOrder(this);
     }
 
     public Account getAccount() {
