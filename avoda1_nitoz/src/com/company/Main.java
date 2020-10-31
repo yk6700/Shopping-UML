@@ -1,7 +1,5 @@
 package com.company;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,11 +25,11 @@ public class Main {
     }
     
     public static void removeUser(){
-
+    
     }
-
-    public static void login(String id, String password){
-        
+    
+    public static void login(){
+    
     }
     
     public static void logout(){
@@ -42,39 +40,27 @@ public class Main {
     
     }
     
-    public static void displayOrder(){ //from here
-        throw new NotImplementedException();
+    public static void displayOrder(){
+    
     }
     
     public static void linkToPremiumAccount(){
-        throw new NotImplementedException();
+    
     }
     
-    public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
-        if(!productHashMap.containsKey(id)){
-            Supplier supplier = new Supplier(supplier_id,supplier_name);
-            productHashMap.put(id, new Product(id, name, supplier));
-            return true;
-        }
-        else
-            return false;
+    public static void addProduct(){
+    
     }
     
-    public static boolean deleteProduct(String id){
-        if(productHashMap.containsKey(id)){
-            productHashMap.remove(id);
-            return true;
-        }
-        else
-            return false;
-        }
-
+    public static void deleteProduct(){
+    
+    }
     
     public static void displayObjects(){
-        throw new NotImplementedException();
+    
     }
     
     public static void displaySpecificObject(){
-        throw new NotImplementedException();
+    
     }
 }

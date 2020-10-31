@@ -9,17 +9,13 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id,String password,Customer c){
+    public WebUser(String login_id, String password, Address address, String phone, String email, Boolean isPremium, int balance){
         this.login_id = login_id;
         this.password = password;
         this.state = New;
-        if(c.getWebUser()==null){
-            customer=c;
-            customer.addWebUser(this);
-        }
-        else{
-            throw new RuntimeException("Web user cannot be connected to more than one customer");
-        }
+
+        customer = new Customer(login_id, address, phone, email, isPremium, balance);
+
     }
 
     public boolean checkPassword(String check){
