@@ -11,6 +11,7 @@ public class Main {
     public static HashMap<String, Account> accountHashMap = new HashMap<>();
     public static HashMap<String, Payment> paymentHashMap = new HashMap<>();
     public static HashMap<String, Customer> customerHashMap = new HashMap<>();
+    public static HashMap<String, Customer> webUserHashMap = new HashMap<>();
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
