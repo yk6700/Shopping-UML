@@ -13,11 +13,6 @@ public class PremuimAccount extends Account {
     }
     
     public void addProduct(Product p){
-        if(p.getPremuimAccount()==null){
-            products.add(p);
-        }
-        else {
-            throw new RuntimeException("Product can be added only to one premium account");
-        }
+        this.products.add(p);
     }
 }

@@ -15,6 +15,7 @@ public class WebUser {
         this.state = New;
         if(c.getWebUser()==null){
             customer=c;
+            customer.addWebUser(this);
         }
         else{
             throw new RuntimeException("Web user cannot be connected to more than one customer");

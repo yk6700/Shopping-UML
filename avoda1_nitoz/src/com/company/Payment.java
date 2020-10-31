@@ -67,5 +67,6 @@ public abstract class Payment {
 
     public void setAccount(Account account) {
         this.account = account;
+        
     }
 }

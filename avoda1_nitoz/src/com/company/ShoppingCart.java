@@ -14,6 +14,7 @@ public class ShoppingCart {
         lineItems=new ArrayList<>();
         if(account.getShoppingCart()==null && webUser.getShoppingCart()==null){
             this.webUser=webUser;
+            this.webUser.setShoppingCart(this);
             this.account=account;
         }
         else{
@@ -21,13 +22,12 @@ public class ShoppingCart {
         }
     }
     
-    public void addLineItem(LineItem l){
-        if(l.getShoppingCart()==null){
-            lineItems.add(l);
+    public boolean addLineItem(LineItem l){
+        if(this.lineItems.contains(l)){
+            return false;
         }
-        else{
-            throw new RuntimeException("line item can be connected only to one shopping cart");
-        }
+        lineItems.add(l);
+        return true;
     }
     
     public Account getAccount() {

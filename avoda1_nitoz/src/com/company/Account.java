@@ -34,21 +34,11 @@ public class Account {
     }
     
     public void addPayment(Payment p){
-        if(p.getAccount()==null){
-            payments.add(p);
-        }
-        else{
-            throw new RuntimeException("Payment can be connected only to one account");
-        }
+        this.payments.add(p);
     }
     
     public void addOrder(Order o){
-        if(o.getAccount()==null){
-            orders.add(o);
-        }
-        else{
-            throw new RuntimeException("Order can be connected only to one account");
-        }
+        this.orders.add(o);
     }
     
     public Customer getCustomer() {
