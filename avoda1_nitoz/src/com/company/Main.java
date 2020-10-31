@@ -21,11 +21,16 @@ public class Main {
 
     
     
-    public static void addUser(){
-    }
+    public static void addUser(){}
     
-    public static void removeUser(){
-    
+    public static void removeUser(String id){
+        /** Get's: string id , 
+         * remove the user from memory
+         */
+        WebUser webUser = webUserHashMap[id];//
+        if(webUser == null || webUser instanceof  WebUser)return;
+        //webUser.state = Banned
+        webUserHashMap.remove(id);
     }
     
     public static void login(){
