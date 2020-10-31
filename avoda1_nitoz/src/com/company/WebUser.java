@@ -9,12 +9,12 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password, Address address, String phone, String email, Boolean isPremium){
+    public WebUser(String login_id, String password, Address address, String phone, String email, Boolean isPremium, int balance){
         this.login_id = login_id;
         this.password = password;
         this.state = New;
 
-        customer = new Customer(login_id, address, phone, email, isPremium);
+        customer = new Customer(login_id, address, phone, email, isPremium, balance);
 
     }
 
