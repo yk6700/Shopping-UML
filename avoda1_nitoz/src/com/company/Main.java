@@ -27,7 +27,7 @@ public class Main {
         /** Get's: string id , 
          * remove the user from memory
          */
-        WebUser webUser = webUserHashMap[id];//
+        WebUser webUser = webUserHashMap.get(id);//
         if(webUser == null || webUser instanceof  WebUser)return;
         //webUser.state = Banned
         webUserHashMap.remove(id);
