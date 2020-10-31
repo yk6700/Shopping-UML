@@ -32,7 +32,12 @@ public class Main {
         shoppingCarts.add(webUser.getShoppingCart());
     }
 
-    public static void removeUser(){
+    public static void removeUser(String id){
+        WebUser webUser = webUserHashMap.get(id);
+        if(webUser != null || webUser instanceof WebUser)return;
+        //webUser.state = Banned;
+        webUserHashMap.remove(id);
+
 
     }
     
