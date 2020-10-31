@@ -25,7 +25,7 @@ public class Main {
 
 
     public static void addUser(String login_id, String password, Address address, String phone, String email, int balance, boolean isPremium){
-        WebUser webUser = new WebUser(login_id , password, address, phone, email, balance, isPremium);
+        WebUser webUser = new WebUser(login_id , password, address, phone, email, isPremium, balance);
         webUserHashMap.put(webUser.getLogin_id(), webUser);
         customerHashMap.put(webUser.getLogin_id(),webUser.getCustomer());
         accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());

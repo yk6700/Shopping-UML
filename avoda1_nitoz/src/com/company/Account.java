@@ -14,7 +14,23 @@ public class Account {
     protected Customer customer;
     protected ArrayList<Payment> payments;
     protected ArrayList<Order> orders;
-    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
         this.id = id;
         this.billing_address = billing_address;
