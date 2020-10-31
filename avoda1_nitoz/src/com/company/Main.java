@@ -15,7 +15,7 @@ public class Main {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
         productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("Moshe")));
         //customerHashMap.put("Dani", new Customer("Dani", null, null, null));
-        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("fuck you"), "0527778888", "t@bgu", false));
+        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("fuck you"), "0527778888", "t@bgu", false, 0));
 
     }
 
