@@ -6,15 +6,35 @@ public class LineItem {
     private ShoppingCart shoppingCart;
     private Order order;
     private Product product;
-    
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public LineItem(int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) {
         this.quantity = quantity;
         this.price = price;
         this.shoppingCart = shoppingCart;
-        boolean s = shoppingCart.addLineItem(this);
+        /*boolean s = shoppingCart.addLineItem(this);
         if(!s)
             throw new RuntimeException("line item already exist");
-        
+        */
         this.order = order;
         boolean o = order.addLineItem(this);
         if(!o)

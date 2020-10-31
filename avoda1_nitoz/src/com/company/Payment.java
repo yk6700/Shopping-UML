@@ -42,4 +42,28 @@ public abstract class Payment {
     public Account getAccount() {
         return account;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setPaid(Date paid) {
+        this.paid = paid;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }
