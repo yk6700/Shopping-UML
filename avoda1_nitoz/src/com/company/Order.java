@@ -54,9 +54,8 @@ public class Order {
 
     public Boolean addPayment(Payment payment)
     {
-        if (payment.getOrder() == null)
+        if (payment.getOrder() == this)
         {
-            payment.setOrder(this);
             paymentsArray.add(payment);
             return true;
         }

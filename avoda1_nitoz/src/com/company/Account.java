@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Account {
@@ -45,6 +46,7 @@ public class Account {
         this.customer = customer;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
+        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), customer.getWebUser());
 
         /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
@@ -56,11 +58,15 @@ public class Account {
     }
     
     public void addPayment(Payment p){
-        this.payments.add(p);
+        if(p.getAccount()==this){
+            payments.add(p);
+        }
     }
     
     public void addOrder(Order o){
-        this.orders.add(o);
+        if(o.getAccount()==this){
+            this.orders.add(o);
+        }
     }
     
     public Customer getCustomer() {

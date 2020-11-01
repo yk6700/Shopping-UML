@@ -15,7 +15,7 @@ public class ShoppingCart {
         this.webUser = webUser;
 
         this.account.setShoppingCart(this);
-
+        this.webUser.setShoppingCart(this);
         lineItems=new ArrayList<>();
 
 
@@ -52,4 +52,5 @@ public class ShoppingCart {
     public WebUser getWebUser() {
         return webUser;
     }
+    
 }

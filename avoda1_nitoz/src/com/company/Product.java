@@ -19,10 +19,7 @@ public class Product {
 
         this.supplier = supplier;
         boolean added = this.supplier.addProduct(this);
-        if (!added) {
-            throw new RuntimeException("Product already contained in supplier");
-        }
-
+        
         lineItems = new ArrayList<>();
     }
 

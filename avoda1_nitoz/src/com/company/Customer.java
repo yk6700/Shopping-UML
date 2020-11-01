@@ -16,6 +16,7 @@ public class Customer {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.webUser=null;
 
         if (isPremium)
             account = new PremuimAccount(id, null, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
@@ -44,13 +45,10 @@ public class Customer {
     }
     
     public void addWebUser(WebUser w){
-        if(w.getCustomer()==null){
+        if(w.getCustomer()==this && this.webUser==null){
             webUser=w;
         }
-        else{
-            throw new RuntimeException("Web user can be connected only to one customer");
-        }
-    }
+      }
     
     public WebUser getWebUser() {
         return webUser;

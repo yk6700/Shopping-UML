@@ -15,11 +15,10 @@ public class WebUser {
         this.login_id = login_id;
         this.password = password;
         this.state = New;
-
+        this.shoppingCart=null;
         customer = new Customer(login_id, address, phone, email, balance, isPremium);
-        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), this);
-
-    }
+        customer.addWebUser(this);
+      }
 
     public boolean checkPassword(String check){
         return this.password.equals(check);
@@ -42,13 +41,10 @@ public class WebUser {
     }
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
-        if(shoppingCart.getWebUser()==null){
+        if(shoppingCart.getWebUser()==this && this.shoppingCart==null){
             this.shoppingCart=shoppingCart;
         }
-        else{
-            throw new RuntimeException("Shopping cart cannot be connected to more than one web user");
-        }
-    }
+     }
 
     public void setState(UserState state) {
         this.state = state;

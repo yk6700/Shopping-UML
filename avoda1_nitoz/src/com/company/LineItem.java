@@ -31,19 +31,13 @@ public class LineItem {
         this.quantity = quantity;
         this.price = price;
         this.shoppingCart = shoppingCart;
-        /*boolean s = shoppingCart.addLineItem(this);
-        if(!s)
-            throw new RuntimeException("line item already exist");
-        */
+        this.shoppingCart.addLineItem(this);
         this.order = order;
         boolean o = order.addLineItem(this);
-        if(!o)
-            throw new RuntimeException("line item already exist");
         
         this.product = product;
         boolean p = product.addLineItem(this);
-        if(!p)
-            throw new RuntimeException("line item already exist");
+        
     }
     
     public int getQuantity() {
