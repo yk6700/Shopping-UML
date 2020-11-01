@@ -15,6 +15,10 @@ public class Account {
     protected ArrayList<Payment> payments;
     protected ArrayList<Order> orders;
 
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
     public String getId() {
         return id;
     }

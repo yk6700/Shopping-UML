@@ -25,7 +25,7 @@ public class Main {
         productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("123")));
         productHashMap.put("Ramen", new Product("Ramen", "Ramen", supplierHashMap.get("123")));
 
-        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("fuck you"), "0521111111", "Dani@bgu", false, 0));
+        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("Ashdod"), "0521111111", "Dani@bgu", false, 0));
         webUserHashMap.put("Dana", new WebUser("Dana", "Dana123", new Address("Beer Sheba"), "0523456789", "Dana@bgu", true, 0));
 
         accountHashMap.put("Dani", webUserHashMap.get("Dani").getCustomer().getAccount());
@@ -40,16 +40,15 @@ public class Main {
             System.out.println("1. Add WebUser");
             System.out.println("2. Remove WebUser");
             System.out.println("3. Login WebUser");
-            System.out.println("4. Login WebUser");
-            System.out.println("5. Logout WebUser");
-            System.out.println("6. Make order");
-            System.out.println("7. Display order");
-            System.out.println("8. Link Product");
-            System.out.println("9. Add Product");
-            System.out.println("10. Delete Product");
-            System.out.println("11. Show All Objects");
-            System.out.println("12. Show Object Id");
-            System.out.println("13. exit");
+            System.out.println("4. Logout WebUser");
+            System.out.println("5. Make order");
+            System.out.println("6. Display order");
+            System.out.println("7. Link Product");
+            System.out.println("8. Add Product");
+            System.out.println("9. Delete Product");
+            System.out.println("10. Show All Objects");
+            System.out.println("11. Show Object Id");
+            System.out.println("12. exit");
 
             command=in.nextLine();
             if(command.contains("Add WebUser")){
@@ -117,9 +116,9 @@ public class Main {
         System.out.println("Please choose if you want to be premium account,type yes or no");
         input=in.nextLine();
         boolean premiumAccount=false;
-        if(input.equals("yes")){
+        if(input.equals("yes"))
             premiumAccount=true;
-        }
+
         System.out.println("Please enter your address");
         String addressStr=in.nextLine();
         Address address=new Address(addressStr);
@@ -167,7 +166,7 @@ public class Main {
     
     public static void removeUser(String id){
         WebUser webUser = webUserHashMap.get(id);
-        if(webUser != null || webUser instanceof WebUser)return;
+        //if(webUser != null || webUser instanceof WebUser)return;*********************************
         //webUser.state = Banned;
         shoppingCarts.remove(webUser.getShoppingCart());
         Account toRemove=webUser.getCustomer().getAccount();
@@ -208,7 +207,26 @@ public class Main {
         return false;
     }
 
-    public static void makeOrder(){
+    public static void makeOrder(Scanner in){
+        System.out.println("Please enter user name");
+        String userName=in.nextLine();
+        ArrayList<Order> orders = accountHashMap.get(userName).getOrders();
+        System.out.println("You can choose those products:");
+
+        for(Order o:orders)
+        {
+            if (o.getStatus().compareTo(OrderStatus.Hold) == 0) //**********************TODO check this
+            {
+                for( LineItem lineItem:o.getLineArray())
+                {
+                    System.out.print("You can buy max of " + lineItem.getQuantity() + " of " + lineItem.getProduct().getName());
+                    System.out.println(" the ID product is: " + lineItem.getProduct().getId());
+                }
+            }
+        }
+
+
+
         throw new NotImplementedException();
     }
 

@@ -67,7 +67,11 @@ public class Order {
     public String getNumber() {
         return number;
     }
-    
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
     public ArrayList<Payment> getPaymentsArray() {
         return paymentsArray;
     }
@@ -75,6 +79,10 @@ public class Order {
     @Override
     public String toString() {
         return "Order"+number;
+    }
+
+    public ArrayList<LineItem> getLineArray() {
+        return lineArray;
     }
     
     public void printOrder(){
