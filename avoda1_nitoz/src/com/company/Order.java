@@ -28,6 +28,22 @@ public class Order {
         this.account.addOrder(this);
     }
 
+    public Date getOrdered() {
+        return ordered;
+    }
+
+    public Date getShipped() {
+        return shipped;
+    }
+
+    public Address getShip_to() {
+        return ship_to;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
     public Account getAccount() {
         return account;
     }
@@ -51,6 +67,25 @@ public class Order {
         }
         return false;
     }
+
+
+    public boolean removeOrder() {
+        account = null;
+        if (paymentsArray != null) {
+            for (Payment payment : paymentsArray) {
+                payment.removePayment();
+            }
+            paymentsArray = null;
+        }
+        if (lineArray != null){
+            for (LineItem item : lineArray) {
+                item.removeItem();
+            }
+            lineArray = null;
+        }
+        return true;
+    }
+
 
     public Boolean addPayment(Payment payment)
     {

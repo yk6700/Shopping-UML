@@ -29,6 +29,15 @@ public class ShoppingCart {
         }*/
     }
 
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public ArrayList<LineItem> getLineItems() {
+        return lineItems;
+    }
+
     public boolean removeLineItem(LineItem lineItem){
         if(lineItem != null && lineItems.contains(lineItem)) {
             lineItems.remove(lineItem);
@@ -52,5 +61,31 @@ public class ShoppingCart {
     public WebUser getWebUser() {
         return webUser;
     }
-    
+
+    public boolean removeShoppingCart() {
+        if (account != null){
+            boolean ar = true;
+            if (account instanceof PremuimAccount){
+                ar = ((PremuimAccount)account).removePremuimAccount();
+            }
+            else {
+                ar = account.removeAccount();
+            }
+
+            if (ar){
+                account.setShoppingCart(null);
+                account = null;
+            }
+        }
+
+        if (lineItems != null){
+            for (LineItem item : lineItems) {
+                boolean ir = item.removeItem();
+            }
+            lineItems = null;
+        }
+
+        return true;
+    }
+
 }

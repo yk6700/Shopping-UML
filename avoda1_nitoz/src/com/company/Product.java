@@ -47,6 +47,22 @@ public class Product {
         return premuimAccount;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public void setPremuimAccount(PremuimAccount premuimAccount) {
+        this.premuimAccount = premuimAccount;
+    }
+
     public boolean addPremuimAccount(PremuimAccount pa) {
         if (premuimAccount != null) {
             return false;
@@ -61,6 +77,24 @@ public class Product {
             return false;
 
         lineItems.add(lineItem);
+        return true;
+    }
+
+    public boolean removeProduct(){
+        if (lineItems != null){
+            for (LineItem item:lineItems) {
+                item.removeItem();
+            }
+            lineItems = null;
+        }
+        if (supplier != null){
+            supplier.getProducts().remove(this.id);
+            supplier = null;
+        }
+        if (premuimAccount != null){
+            premuimAccount.getProducts().remove(this.id);
+            premuimAccount = null;
+        }
         return true;
     }
 

@@ -59,5 +59,21 @@ public class LineItem {
     public Product getProduct() {
         return product;
     }
+
+    public boolean removeItem() {
+        if (order != null){
+            order.getLineArray().remove(this);
+            order = null;
+        }
+        if (shoppingCart != null){
+            shoppingCart.getLineItems().remove(this);
+            shoppingCart = null;
+        }
+        if (product != null){
+            product.getLineItems().remove(this);
+            product = null;
+        }
+        return true;
+    }
 }
 

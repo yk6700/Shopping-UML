@@ -53,6 +53,20 @@ public class WebUser {
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
+
+
+    public boolean removeWebUser(){
+        if (this.shoppingCart != null){
+            boolean rs = shoppingCart.removeShoppingCart();
+            if (rs)
+                shoppingCart = null;
+        }
+        if (customer != null){
+            customer.setWebUser(null);
+            customer = null;
+        }
+        return true;
+    }
     
     @Override
     public String toString() {

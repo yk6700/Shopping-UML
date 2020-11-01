@@ -15,6 +15,7 @@ public class Account {
     protected Customer customer;
     protected ArrayList<Payment> payments;
     protected ArrayList<Order> orders;
+    private Order lastOrder;
 
     public ArrayList<Order> getOrders() {
         return orders;
@@ -47,7 +48,7 @@ public class Account {
         payments=new ArrayList<>();
         orders=new ArrayList<>();
         shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), customer.getWebUser());
-
+        lastOrder = null;
         /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
             this.customer = customer;
@@ -62,11 +63,41 @@ public class Account {
             payments.add(p);
         }
     }
+
+    public Order getLastOrder() {
+        return lastOrder;
+    }
     
     public void addOrder(Order o){
         if(o.getAccount()==this){
             this.orders.add(o);
+            lastOrder = o;
         }
+
+    }
+
+    public boolean removeAccount() {
+        if (customer != null){
+            boolean cr = customer.removeCustomer();
+            if (cr){
+                customer = null;
+            }
+        }
+        if (payments != null){
+            for (Payment pay : payments) {
+                boolean pr = pay.removePayment();
+            }
+            payments = null;
+        }
+        if (orders != null){
+            for (Order order : orders) {
+                boolean or = order.removeOrder();
+            }
+            orders = null;
+            lastOrder = null;
+        }
+
+        return true;
     }
     
     public Customer getCustomer() {

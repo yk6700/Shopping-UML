@@ -19,6 +19,7 @@ public class Main {
     public static ArrayList<ShoppingCart> shoppingCarts = new ArrayList<>();
     public static HashMap<String,Order> orderHashMap=new HashMap<>();
     public static ArrayList<LineItem> LineItemsList = new ArrayList<>();
+    public static WebUser onlineUser = null;
     
     public static void main(String[] args) {
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
@@ -163,7 +164,44 @@ public class Main {
         accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());
         shoppingCarts.add(webUser.getShoppingCart());
     }
-    
+
+    public static void removeUser(String id){
+        if (!webUserHashMap.containsKey(id)){
+            System.out.println("Web User doesnt exist");
+            return;
+        }
+        WebUser webUser = webUserHashMap.get(id);
+        if (webUser == onlineUser)
+            onlineUser = null;
+        boolean removed = webUser.removeWebUser();
+        if (removed){
+            webUserHashMap.remove(webUser.getLogin_id());
+            accountHashMap.remove(webUser.getLogin_id());
+            customerHashMap.remove(webUser.getLogin_id());
+            for (ShoppingCart shoppingCart:shoppingCarts) {
+                if (shoppingCart.getWebUser() == null)
+                    shoppingCarts.remove(shoppingCart);
+            }
+            for (Order order:orderHashMap.values()){
+                if (order.getAccount() == null){
+                    String num = order.getNumber();
+                    orderHashMap.remove(num);
+                }
+            }
+            for (Payment payment:paymentHashMap.values()){
+                if (payment.getAccount() == null){
+                    String pid = payment.getId();
+                    paymentHashMap.remove(pid);
+                }
+            }
+            for (LineItem lineItem:LineItemsList) {
+                if (lineItem.getShoppingCart() == null)
+                    LineItemsList.remove(lineItem);
+            }
+        }
+    }
+
+    /*
     public static void removeUser(String id){
         WebUser webUser = webUserHashMap.get(id);
         //if(webUser != null || webUser instanceof WebUser)return;*********************************
@@ -184,27 +222,41 @@ public class Main {
         customerHashMap.remove(webUser.getCustomer().getId());
         webUserHashMap.remove(id);
     }
+    */
     
     
     public static boolean login(String id,String password) { //TODO should i check if he is already logged in?
-        if (webUserHashMap.containsKey(id)) {
-            WebUser webuser = webUserHashMap.get(id);
-            if (webuser.getLogin_id().equals(id) && webuser.checkPassword(password)) {
-                webuser.setState(UserState.Active);
-                return true;
-            }
+        if (!webUserHashMap.containsKey(id)){
+            System.out.println("Web User doesnt exist");
+            return false;
         }
-        return false;
+        WebUser webUser = webUserHashMap.get(id);
+
+        if (!password.equals(webUser.getPassword())){
+            System.out.println("Incorrect password");
+            return false;
+        }
+        if (onlineUser != null){
+            onlineUser.setState(UserState.Blocked);
+        }
+        onlineUser = webUser;
+        webUser.setState(UserState.Active);
+        return true;
     }
 
 
     public static boolean logout(String id){ //TODO should i check if he is already logged out?
-        if (webUserHashMap.containsKey(id)) {
-            WebUser webuser = webUserHashMap.get(id);
-            webuser.setState(UserState.Blocked);
-            return true;
+        if (!webUserHashMap.containsKey(id)){
+            System.out.println("Web User doesnt exist");
+            return false;
         }
-        return false;
+        if (onlineUser == null || !onlineUser.getLogin_id().equals(id)){
+            System.out.println("Web User already logged out");
+            return false;
+        }
+        onlineUser.setState(UserState.Blocked);
+        onlineUser = null;
+        return true;
     }
 
     public static void makeOrder(Scanner in){
@@ -272,6 +324,20 @@ public class Main {
     }
 
     public static boolean deleteProduct(String name){
+
+        if (!productHashMap.containsKey(name)){
+            System.out.println("Product "+name+ " dose'nt exist");
+            return false;
+        }
+        Product p = productHashMap.get(name);
+        p.removeProduct();
+        productHashMap.remove(name);
+        for (LineItem lineItem:LineItemsList) {
+            if (lineItem.getShoppingCart() == null)
+                LineItemsList.remove(lineItem);
+        }
+
+        /*
         if(productHashMap.containsKey(name)){
             Product product = productHashMap.get(name);
             ArrayList<LineItem> lineitems = product.getLineItems();
@@ -290,6 +356,8 @@ public class Main {
         }
         else
             return false;
+            */
+        return true;
     }
 
 

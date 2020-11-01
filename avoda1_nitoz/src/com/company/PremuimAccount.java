@@ -11,7 +11,18 @@ public class PremuimAccount extends Account {
         super(id, billing_address, is_closed, open, closed, balance, customer);
         products=new ArrayList<>();
     }
-    
+
+    public boolean removePremuimAccount() {
+        this.removeAccount();
+        if (products != null){
+            for (Product product:products) {
+                product.setPremuimAccount(null);
+            }
+            products = null;
+        }
+        return true;
+    }
+
     public void addProduct(Product p){
         this.products.add(p);
     }

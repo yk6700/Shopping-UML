@@ -69,6 +69,12 @@ public abstract class Payment {
         this.account = account;
         
     }
+
+    public boolean removePayment(){
+        account = null;
+        order = null;
+        return true;
+    }
     
     
     public void printPayment(){

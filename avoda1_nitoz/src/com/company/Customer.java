@@ -43,12 +43,42 @@ public class Customer {
     public Account getAccount() {
         return account;
     }
-    
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setWebUser(WebUser webUser) {
+        this.webUser = webUser;
+    }
+
     public void addWebUser(WebUser w){
         if(w.getCustomer()==this && this.webUser==null){
             webUser=w;
         }
       }
+
+    public boolean removeCustomer() {
+        webUser = null;
+        account = null;
+        return true;
+    }
     
     public WebUser getWebUser() {
         return webUser;
