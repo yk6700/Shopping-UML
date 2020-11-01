@@ -226,9 +226,31 @@ public class Main {
         }
 
 
+        System.out.println("Which item would you want?");
+        String id = in.nextLine();
+        for(Order o:orders)
+        {
+            if (o.getStatus().compareTo(OrderStatus.Hold) == 0) //**********************TODO check this
+            {
+                for( LineItem lineItem:o.getLineArray())
+                {
+                    if (lineItem.getProduct().getId().equals(id))
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+
 
         throw new NotImplementedException();
     }
+
+    /*private static LineItem chooseItem(Scanner in, ArrayList<Order> orders)
+    {
+
+    }*/
 
     public static void displayOrder(){ //from here
         throw new NotImplementedException();
