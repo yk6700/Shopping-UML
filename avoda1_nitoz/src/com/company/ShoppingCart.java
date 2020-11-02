@@ -88,4 +88,19 @@ public class ShoppingCart {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Shopping Cart:";
+    }
+
+    public void printShoppingCart(){
+        System.out.println(this);
+        System.out.println("created: "+created.toString());
+        System.out.println("Account: "+account.toString());
+        System.out.println("WebUser: "+webUser.toString());
+        for(LineItem lineItem:lineItems){
+            System.out.println(lineItem);
+        }
+    }
+
 }

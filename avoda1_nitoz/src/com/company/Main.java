@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 
 public class Main {
+
+    public static Integer objectId = 1;
+    public static HashMap<Integer,Object> objects = new HashMap<>();
     
     public static HashMap<String, Supplier> supplierHashMap = new HashMap<>();
     public static HashMap<String, Product> productHashMap = new HashMap<>();
@@ -22,6 +25,7 @@ public class Main {
     public static WebUser onlineUser = null;
     
     public static void main(String[] args) {
+        /*
         supplierHashMap.put("123", new Supplier("123", "Moshe"));
         productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("123")));
         productHashMap.put("Ramen", new Product("Ramen", "Ramen", supplierHashMap.get("123")));
@@ -33,7 +37,27 @@ public class Main {
         accountHashMap.put("Dana", webUserHashMap.get("Dana").getCustomer().getAccount());
 
         ((PremuimAccount)accountHashMap.get("Dana")).addProduct(productHashMap.get("Bamba"));
-        
+        */
+        Supplier s1 = new Supplier("123","Moshe");
+        supplierHashMap.put("123",s1);
+        objects.put(objectId,s1);
+        objectId++;
+
+        Product p1 = new Product("Bamba","Bamba",s1);
+        productHashMap.put("Bamba",p1);
+        objects.put(objectId,p1);
+        objectId++;
+
+        Product p2 = new Product("Ramen","Ramen",s1);
+        productHashMap.put("Ramen",p2);
+        objects.put(objectId,p2);
+        objectId++;
+
+        addUser("Dani", "Dani123", false, new Address("Ashdod"), "0521111111", "Dani@bgu",100);
+        addUser("Dana", "Dana123",true, new Address("Beer Sheba"), "0523456789", "Dana@bgu",100);
+        PremuimAccount premuimAccount = (PremuimAccount) accountHashMap.get("Dana");
+        premuimAccount.addProduct(p1);
+        ///////////////////////////////////////////////////
         String command="";
         Scanner in=new Scanner(System.in);
         do{
@@ -163,6 +187,15 @@ public class Main {
         customerHashMap.put(webUser.getLogin_id(),webUser.getCustomer());
         accountHashMap.put(webUser.getLogin_id(),webUser.getCustomer().getAccount());
         shoppingCarts.add(webUser.getShoppingCart());
+
+        objects.put(objectId,webUser);
+        objectId++;
+        objects.put(objectId,webUser.getCustomer());
+        objectId++;
+        objects.put(objectId,webUser.getCustomer().getAccount());
+        objectId++;
+        objects.put(objectId,webUser.getShoppingCart());
+        objectId++;
     }
 
     public static void removeUser(String id){
@@ -178,27 +211,17 @@ public class Main {
             webUserHashMap.remove(webUser.getLogin_id());
             accountHashMap.remove(webUser.getLogin_id());
             customerHashMap.remove(webUser.getLogin_id());
-            for (ShoppingCart shoppingCart:shoppingCarts) {
-                if (shoppingCart.getWebUser() == null)
-                    shoppingCarts.remove(shoppingCart);
-            }
-            for (Order order:orderHashMap.values()){
-                if (order.getAccount() == null){
-                    String num = order.getNumber();
-                    orderHashMap.remove(num);
-                }
-            }
-            for (Payment payment:paymentHashMap.values()){
-                if (payment.getAccount() == null){
-                    String pid = payment.getId();
-                    paymentHashMap.remove(pid);
-                }
-            }
-            for (LineItem lineItem:LineItemsList) {
-                if (lineItem.getShoppingCart() == null)
-                    LineItemsList.remove(lineItem);
-            }
+            shoppingCarts.removeIf(shoppingCart -> shoppingCart.getWebUser() == null);
+            orderHashMap.entrySet().removeIf(order -> orderHashMap.get(order).getAccount() == null);
+            paymentHashMap.entrySet().removeIf(payment -> paymentHashMap.get(payment).getAccount() == null);
+            LineItemsList.removeIf(lineItem -> lineItem.getShoppingCart() == null);
+
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof LineItem)&&(((LineItem)objects.get(o)).getProduct() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Payment)&&(((Payment)objects.get(o)).getAccount() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Order)&&(((Order)objects.get(o)).getAccount() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof ShoppingCart)&&(((ShoppingCart)objects.get(o)).getAccount() == null));
         }
+
     }
 
     /*
@@ -313,14 +336,20 @@ public class Main {
     }
 
     public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
-        if(!productHashMap.containsKey(id)){
-            Supplier supplier = new Supplier(supplier_id,supplier_name);
-            productHashMap.put(id, new Product(id, name, supplier));
-            supplierHashMap.put(supplier_id,supplier);
-            return true;
-        }
-        else
+        if (productHashMap.containsKey(name)){
+            System.out.println("Product "+name+ " already exist");
             return false;
+        }
+        if (!supplierHashMap.containsKey(supplier_id)){
+            System.out.println("Supplier dose'nt exist");
+            return false;
+        }
+        Supplier supplier = supplierHashMap.get(supplier_id);
+        Product product = new Product(id,name,supplier);
+        productHashMap.put(name, product);
+        objects.put(objectId,product);
+        objectId++;
+        return true;
     }
 
     public static boolean deleteProduct(String name){
@@ -332,10 +361,11 @@ public class Main {
         Product p = productHashMap.get(name);
         p.removeProduct();
         productHashMap.remove(name);
-        for (LineItem lineItem:LineItemsList) {
-            if (lineItem.getShoppingCart() == null)
-                LineItemsList.remove(lineItem);
-        }
+        LineItemsList.removeIf(lineItem -> lineItem.getShoppingCart() == null);
+
+        objects.keySet().removeIf(o -> (objects.get(o) instanceof Product)&&(((Product)objects.get(o)).getSupplier() == null));
+        objects.keySet().removeIf(o -> (objects.get(o) instanceof LineItem)&&(((LineItem)objects.get(o)).getProduct() == null));
+
 
         /*
         if(productHashMap.containsKey(name)){
@@ -362,6 +392,14 @@ public class Main {
 
 
     public static void displayObjects(){
+
+        for (Integer in : objects.keySet()){
+            System.out.println("Uniq ID: "+in.toString());
+            System.out.println(objectId.toString());
+            System.out.println();
+        }
+
+        /*
         for (Supplier s : supplierHashMap.values())
             s.toString();
         for (Product p : productHashMap.values())
@@ -380,49 +418,33 @@ public class Main {
             s.toString();
         for (LineItem l : LineItemsList)
             l.toString();
+       */
     }
 
     public static void displaySpecificObject(String id){
-        for (Supplier s : supplierHashMap.values()) {
-            if (s.getId().equals(id)) {
-                s.printSupplier();
-                return;
-            }
-        }
-        for (Product p : productHashMap.values()) {
-            if (p.getId().equals(id)) {
-                p.printProduct();
-                return;
-            }
-        }
-        for (Account a : accountHashMap.values()) {
-            if(a.getId().equals(id)) {
-                a.printAccount();
-                return;
-            }
-        }
-        for (Payment p : paymentHashMap.values()){
-            if(p.getId().equals(id)) {
-                p.printPayment();
-                return;
-            }
-        }
-        for (Customer c : customerHashMap.values()){
-            if(c.getId().equals(id)) {
-                c.printCustomer();
-                return;
-            }
-        }
+        for (Integer in : objects.keySet()) {
+            if (in.toString().equals(id)){
+                Object o = objects.get(in);
 
-        for (WebUser w : webUserHashMap.values()){
-            if(w.getLogin_id().equals(id)) {
-                w.printWebUser();
-                return;
-            }
-        }
-        for (Order o : orderHashMap.values()){
-            if(o.getNumber().equals(id)) {
-                o.printOrder();
+                if (o instanceof WebUser)
+                    ((WebUser)o).printWebUser();
+                else if (o instanceof Customer)
+                    ((Customer)o).printCustomer();
+                else if (o instanceof Account)
+                    ((Account)o).printAccount();
+                else if (o instanceof ShoppingCart)
+                    ((ShoppingCart)o).printShoppingCart();
+                else if (o instanceof Product)
+                    ((Product)o).printProduct();
+                else if (o instanceof LineItem)
+                    ((LineItem)o).printLineItem();
+                else if (o instanceof Order)
+                    ((Order)o).printOrder();
+                else if (o instanceof ShoppingCart)
+                    ((ShoppingCart)o).printShoppingCart();
+                else if (o instanceof Payment)
+                    ((Payment)o).printPayment();
+
                 return;
             }
         }
