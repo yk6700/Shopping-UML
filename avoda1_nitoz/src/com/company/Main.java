@@ -3,7 +3,9 @@ package com.company;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sound.sampled.Line;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -284,15 +286,18 @@ public class Main {
 
     public static void makeOrder(Scanner in){
         System.out.println("Please enter user name");
-        String userName=in.nextLine();
-        ArrayList<Order> orders = accountHashMap.get(userName).getOrders();
+        String userName = in.nextLine();
+        //String Id = webUserHashMap.get(userName).getCustomer().getId();
+        Account saler = accountHashMap.get(userName);
+        ArrayList<Order> orders = saler.getOrders();
+
         System.out.println("You can choose those products:");
 
         for(Order o:orders)
         {
-            if (o.getStatus().compareTo(OrderStatus.Hold) == 0) //**********************TODO check this
+            if (o.getStatus() == OrderStatus.Hold)
             {
-                for( LineItem lineItem:o.getLineArray())
+                for(LineItem lineItem: o.getLineArray())
                 {
                     System.out.print("You can buy max of " + lineItem.getQuantity() + " of " + lineItem.getProduct().getName());
                     System.out.println(" the ID product is: " + lineItem.getProduct().getId());
@@ -301,25 +306,45 @@ public class Main {
         }
 
 
-        System.out.println("Which item would you want?");
+        System.out.println("Which item ID would you want?");
         String id = in.nextLine();
-        for(Order o:orders)
+        System.out.println("How much do you want to buy?");
+        String quantilyStr = in.nextLine();
+
+        int quantilyInt = 0;
+        try{
+        quantilyInt = Integer.parseInt(quantilyStr);}
+        catch (Exception e){
+            System.out.println("Please enter number"); }//TODO fix
+
+
+        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new Address(saler.getBilling_address()), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+        objects.put(objectId, order);
+        objectId++;
+
+        //LineItem lineItem = new LineItem(quantilyInt, 666, saler.getShoppingCart(), order, );
+
+        onlineUser.getCustomer().getAccount().addOrder(order);
+        /*for(Order o:orders)
         {
-            if (o.getStatus().compareTo(OrderStatus.Hold) == 0) //**********************TODO check this
+            if (o.getStatus() == OrderStatus.Hold)
             {
                 for( LineItem lineItem:o.getLineArray())
                 {
                     if (lineItem.getProduct().getId().equals(id))
                     {
-                        
+                        if(quantilyInt > lineItem.getQuantity())
+                            System.out.println("The max of that product is - " + lineItem.getQuantity());
+                        else{
+
+                        }
                     }
                 }
             }
-        }
+        }*/
 
-
-
-        throw new NotImplementedException();
+        System.out.println("Would you want to buy more? (yes or no)");
+        String anser = in.nextLine();
     }
 
     /*private static LineItem chooseItem(Scanner in, ArrayList<Order> orders)
@@ -327,12 +352,16 @@ public class Main {
 
     }*/
 
-    public static void displayOrder(){ //from here
-        throw new NotImplementedException();
+    public static void displayOrder(){
+        onlineUser.getLastOrder().toString();
     }
 
-    public static void linkToPremiumAccount(String name){
-        throw new NotImplementedException();
+    public static boolean linkToPremiumAccount(String id){
+        if(onlineUser.isPremiumAccount()){
+            onlineUser.addProductToPremium((Product)objects.get(Integer.parseInt(id)));
+            return true;
+        }
+        return false;
     }
 
     public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
@@ -440,8 +469,8 @@ public class Main {
                     ((LineItem)o).printLineItem();
                 else if (o instanceof Order)
                     ((Order)o).printOrder();
-                else if (o instanceof ShoppingCart)
-                    ((ShoppingCart)o).printShoppingCart();
+                else if (o instanceof Supplier)
+                    ((Supplier)o).printSupplier();
                 else if (o instanceof Payment)
                     ((Payment)o).printPayment();
 

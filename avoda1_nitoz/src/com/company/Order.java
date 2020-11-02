@@ -13,9 +13,11 @@ public class Order {
     private Account account;
     private ArrayList<LineItem> lineArray;
     private ArrayList<Payment> paymentsArray;
+    private static int counter = 0;
 
-    public Order(String number, Date ordered, Date shipprd, Address ship_to, OrderStatus status, float total, Account account) {
-        this.number = number;
+    public Order(Date ordered, Date shipprd, Address ship_to, OrderStatus status, float total, Account account) {
+        this.number = String.valueOf(counter);
+        counter++;
         this.ordered = ordered;
         this.shipped = shipprd;
         this.ship_to = ship_to;
@@ -112,7 +114,7 @@ public class Order {
     
     @Override
     public String toString() {
-        return "Order"+number;
+        return "Order";
     }
 
     public ArrayList<LineItem> getLineArray() {
@@ -120,7 +122,6 @@ public class Order {
     }
     
     public void printOrder(){
-        System.out.println(this);
         System.out.println("Ordered Date:"+ordered);
         System.out.println("shipped:"+shipped);
         System.out.println("ship to:"+ship_to.getAddress());
