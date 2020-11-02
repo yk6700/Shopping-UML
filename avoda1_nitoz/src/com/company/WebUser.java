@@ -81,4 +81,16 @@ public class WebUser {
             System.out.println(shoppingCart);
         }
     }
+
+    public Order getLastOrder(){
+        return getCustomer().getAccount().getLastOrder();
+    }
+
+    public boolean isPremiumAccount(){
+        return (getCustomer().getAccount() instanceof PremuimAccount);
+    }
+
+    public void addProductToPremium(Product product){
+        ((PremuimAccount)getCustomer().getAccount()).addProduct(product);
+    }
 }

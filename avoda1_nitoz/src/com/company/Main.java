@@ -316,10 +316,6 @@ public class Main {
                 }
             }
         }
-
-
-
-        throw new NotImplementedException();
     }
 
     /*private static LineItem chooseItem(Scanner in, ArrayList<Order> orders)
@@ -327,12 +323,16 @@ public class Main {
 
     }*/
 
-    public static void displayOrder(){ //from here
-        throw new NotImplementedException();
+    public static void displayOrder(){
+        onlineUser.getLastOrder().toString();
     }
 
-    public static void linkToPremiumAccount(String name){
-        throw new NotImplementedException();
+    public static boolean linkToPremiumAccount(String id){
+        if(onlineUser.isPremiumAccount()){
+            onlineUser.addProductToPremium((Product)objects.get(Integer.parseInt(id)));
+            return true;
+        }
+        return false;
     }
 
     public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
@@ -440,8 +440,8 @@ public class Main {
                     ((LineItem)o).printLineItem();
                 else if (o instanceof Order)
                     ((Order)o).printOrder();
-                else if (o instanceof ShoppingCart)
-                    ((ShoppingCart)o).printShoppingCart();
+                else if (o instanceof Supplier)
+                    ((Supplier)o).printSupplier();
                 else if (o instanceof Payment)
                     ((Payment)o).printPayment();
 
