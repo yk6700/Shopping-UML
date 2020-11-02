@@ -112,7 +112,7 @@ public class Order {
     
     @Override
     public String toString() {
-        return "Order"+number;
+        return "Order";
     }
 
     public ArrayList<LineItem> getLineArray() {
@@ -120,7 +120,6 @@ public class Order {
     }
     
     public void printOrder(){
-        System.out.println(this);
         System.out.println("Ordered Date:"+ordered);
         System.out.println("shipped:"+shipped);
         System.out.println("ship to:"+ship_to.getAddress());

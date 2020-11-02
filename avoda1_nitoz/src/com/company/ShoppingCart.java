@@ -90,14 +90,13 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "Shopping Cart:";
+        return "Shopping Cart";
     }
 
     public void printShoppingCart(){
-        System.out.println(this);
         System.out.println("created: "+created.toString());
-        System.out.println("Account: "+account.toString());
-        System.out.println("WebUser: "+webUser.toString());
+        System.out.println(account);
+        System.out.println(webUser);
         for(LineItem lineItem:lineItems){
             System.out.println(lineItem);
         }

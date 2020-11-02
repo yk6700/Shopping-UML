@@ -16,12 +16,11 @@ public class ImmediatePayment extends Payment {
     
     @Override
     public String toString() {
-        return "ImmediatePayment"+id;
+        return "ImmediatePayment";
     }
     
     public void printPayment(){
         super.printPayment();
-        System.out.println(this);
         System.out.println("Phone confirmation:"+phoneConfirmation);
     }
 }

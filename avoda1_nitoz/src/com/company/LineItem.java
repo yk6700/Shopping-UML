@@ -75,8 +75,18 @@ public class LineItem {
         }
         return true;
     }
-
-    public void printLineItem() {//TODO
+    
+    @Override
+    public String toString() {
+        return "LineItem";
+    }
+    
+    public void printLineItem(){
+        System.out.println("Quantity:"+quantity);
+        System.out.println("Price"+price);
+        System.out.println(shoppingCart);
+        System.out.println(product);
+        System.out.println(order);
     }
 }
 

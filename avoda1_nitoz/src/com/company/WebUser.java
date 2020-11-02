@@ -70,11 +70,10 @@ public class WebUser {
     
     @Override
     public String toString() {
-        return "WebUser"+this.login_id;
+        return "WebUser";
     }
     
     public void printWebUser(){
-        System.out.println(this);
         System.out.println("Password:"+this.password);
         System.out.println("State:"+state);
         System.out.println(customer);

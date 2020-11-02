@@ -16,12 +16,11 @@ public class DelayedPayment extends Payment{
     
     @Override
     public String toString() {
-        return "DelayedPayment"+id;
+        return "DelayedPayment";
     }
     
     public void printPayment(){
         super.printPayment();
-        System.out.println(this);
         System.out.println("Payment Date:"+paymentDate);
     }
 }

@@ -110,11 +110,10 @@ public class Account {
     
     @Override
     public String toString() {
-        return "Account,"+this.id;
+        return "Account";
     }
     
     public void printAccount(){
-        System.out.println(this);
         System.out.println("Billing Address:"+billing_address);
         System.out.println("Balance:"+balance);
         System.out.println("is closed:"+is_closed);
@@ -122,10 +121,10 @@ public class Account {
         System.out.println("Closed"+closed);
         System.out.println(shoppingCart);
         System.out.println(customer);
-        for(Order o:orders){
+        for(Order o :orders){
             System.out.println(o);
         }
-        for(Payment p:payments){
+        for(Payment p :payments){
             System.out.println(p);
         }
     }

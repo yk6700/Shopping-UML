@@ -1,9 +1,11 @@
 package com.company;
 
+import javafx.util.Pair;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Supplier {
     private String id;
@@ -36,9 +38,18 @@ public class Supplier {
         products.put(product.getId(), product);
         return true;
     }
-
+    
+    @Override
+    public String toString() {
+        return "Supplier";
+    }
+    
     public void printSupplier(){
-        throw new NotImplementedException();
+        System.out.println("ID:"+id);
+        System.out.println("Name:"+name);
+        for(Map.Entry<String,Product> product:products.entrySet()){
+            System.out.println(product.getValue());
+        }
     }
 
 }

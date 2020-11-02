@@ -86,11 +86,10 @@ public class Customer {
     
     @Override
     public String toString() {
-        return "Customer"+this.id;
+        return "Customer";
     }
     
     public void printCustomer(){
-        System.out.println(this);
         System.out.println("Address:"+this.address.getAddress());
         System.out.println("Phone:"+phone);
         System.out.println("Email:"+email);

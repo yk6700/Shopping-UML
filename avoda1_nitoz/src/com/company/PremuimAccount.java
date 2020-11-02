@@ -22,7 +22,19 @@ public class PremuimAccount extends Account {
         }
         return true;
     }
-
+    
+    @Override
+    public String toString() {
+        return "PremiumAccount";
+    }
+    
+    public void printAccount(){
+        super.printAccount();
+        for(Product p:products){
+            System.out.println(p);
+        }
+    }
+    
     public void addProduct(Product p){
         this.products.add(p);
     }
