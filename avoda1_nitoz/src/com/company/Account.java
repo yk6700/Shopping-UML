@@ -21,6 +21,30 @@ public class Account {
         return orders;
     }
 
+    public Address getBilling_address() {
+        return billing_address;
+    }
+
+    public boolean isIs_closed() {
+        return is_closed;
+    }
+
+    public Date getOpen() {
+        return open;
+    }
+
+    public Date getClosed() {
+        return closed;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public ArrayList<Payment> getPayments() {
+        return payments;
+    }
+
     public String getId() {
         return id;
     }
@@ -128,4 +152,6 @@ public class Account {
             System.out.println(p);
         }
     }
+
+
 }
