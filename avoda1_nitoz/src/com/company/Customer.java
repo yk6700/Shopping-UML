@@ -11,17 +11,17 @@ public class Customer {
     private Account account;
     private WebUser webUser;
 
-    public Customer(String id, Address address, String phone, String email, int balance, Boolean isPremium) {
+    public Customer(String id, Address address, String phone, String email, int balance, Boolean isPremium, WebUser webUser) {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.webUser=null;
+        this.webUser=webUser;
 
         if (isPremium)
-            account = new PremuimAccount(id, null, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
+            account = new PremuimAccount(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
         else
-            account = new Account(id, null, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
+            account = new Account(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
     }
     
     public String getId() {

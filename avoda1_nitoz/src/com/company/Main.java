@@ -424,7 +424,7 @@ public class Main {
 
         for (Integer in : objects.keySet()){
             System.out.println("Uniq ID: "+in.toString());
-            System.out.println(objectId.toString());
+            System.out.println((objects.get(in)).toString());
             System.out.println();
         }
 

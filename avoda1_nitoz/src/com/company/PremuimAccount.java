@@ -7,7 +7,7 @@ public class PremuimAccount extends Account {
     
     private ArrayList<Product> products;
     
-    public PremuimAccount(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
+    public PremuimAccount(String id, Address billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
         super(id, billing_address, is_closed, open, closed, balance, customer);
         products=new ArrayList<>();
     }

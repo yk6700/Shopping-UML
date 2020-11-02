@@ -16,7 +16,7 @@ public class WebUser {
         this.password = password;
         this.state = New;
         this.shoppingCart=null;
-        customer = new Customer(login_id, address, phone, email, balance, isPremium);
+        customer = new Customer(login_id, address, phone, email, balance, isPremium, this);
         customer.addWebUser(this);
       }
 

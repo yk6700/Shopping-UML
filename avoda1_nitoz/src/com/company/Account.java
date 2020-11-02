@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Account {
     protected String id;
-    protected String billing_address;
+    protected Address billing_address;
     protected boolean is_closed;
     protected Date open;
     protected Date closed;
@@ -37,7 +37,7 @@ public class Account {
         this.customer = customer;
     }
 
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
+    public Account(String id, Address billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
@@ -47,7 +47,7 @@ public class Account {
         this.customer = customer;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
-        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), customer.getWebUser());
+        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), this, customer.getWebUser());
         lastOrder = null;
         /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
