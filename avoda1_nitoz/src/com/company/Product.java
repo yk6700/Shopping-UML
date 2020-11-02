@@ -97,9 +97,22 @@ public class Product {
         }
         return true;
     }
-
+    
+    @Override
+    public String toString() {
+        return "Product";
+    }
+    
     public void printProduct(){
-        throw new NotImplementedException();
+        System.out.println("ID:"+id);
+        System.out.println("Name:"+name);
+        System.out.println(supplier);
+        if(premuimAccount!=null){
+            System.out.println(premuimAccount);
+        }
+        for(LineItem l:lineItems){
+            System.out.println(l);
+        }
     }
 }
 

@@ -110,11 +110,10 @@ public class Account {
     
     @Override
     public String toString() {
-        return "Account,"+this.id;
+        return "Account";
     }
     
     public void printAccount(){
-        System.out.println(this);
         System.out.println("Billing Address:"+billing_address);
         System.out.println("Balance:"+balance);
         System.out.println("is closed:"+is_closed);
