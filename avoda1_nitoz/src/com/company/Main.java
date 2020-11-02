@@ -318,7 +318,7 @@ public class Main {
             System.out.println("Please enter number"); }//TODO fix
 
 
-        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new Address(saler.getBilling_address()), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), saler.getBilling_address(), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
         objects.put(objectId, order);
         objectId++;
 
@@ -353,12 +353,12 @@ public class Main {
     }*/
 
     public static void displayOrder(){
-        onlineUser.getLastOrder().toString();
+        onlineUser.getCustomer().getAccount().getLastOrder().toString();
     }
 
     public static boolean linkToPremiumAccount(String id){
-        if(onlineUser.isPremiumAccount()){
-            onlineUser.addProductToPremium((Product)objects.get(Integer.parseInt(id)));
+        if(onlineUser.getCustomer().getAccount() instanceof PremuimAccount){
+            ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct((Product)objects.get(Integer.parseInt(id)));
             return true;
         }
         return false;
