@@ -218,6 +218,10 @@ public class Main {
             paymentHashMap.entrySet().removeIf(payment -> paymentHashMap.get(payment).getAccount() == null);
             LineItemsList.removeIf(lineItem -> lineItem.getShoppingCart() == null);
 
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof WebUser)&&(((WebUser)objects.get(o)).getCustomer() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Customer)&&(((Customer)objects.get(o)).getAccount() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Account)&&(((Account)objects.get(o)).getCustomer() == null));
+
             objects.keySet().removeIf(o -> (objects.get(o) instanceof LineItem)&&(((LineItem)objects.get(o)).getProduct() == null));
             objects.keySet().removeIf(o -> (objects.get(o) instanceof Payment)&&(((Payment)objects.get(o)).getAccount() == null));
             objects.keySet().removeIf(o -> (objects.get(o) instanceof Order)&&(((Order)objects.get(o)).getAccount() == null));
@@ -357,11 +361,31 @@ public class Main {
     }
 
     public static boolean linkToPremiumAccount(String id){
+
+
+        if (!productHashMap.containsKey(id)){
+            System.out.println("Product "+id+" dose'nt exist");
+            return false;
+        }
+        if (onlineUser == null || !(onlineUser.getCustomer().getAccount() instanceof PremuimAccount)){
+            System.out.println("There are no premium accounts that are connected right now");
+            return false;
+        }
+        Product product = productHashMap.get(id);
+        if (product.getPremuimAccount() != null){
+            System.out.println("Product "+id+" already connected to a Premium account");
+            return false;
+        }
+        ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct(product);
+        return true;
+
+        /*
         if(onlineUser.getCustomer().getAccount() instanceof PremuimAccount){
             ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct((Product)objects.get(Integer.parseInt(id)));
             return true;
         }
         return false;
+        */
     }
 
     public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
