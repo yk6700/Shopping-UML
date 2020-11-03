@@ -96,12 +96,12 @@ public class Product {
     
     @Override
     public String toString() {
-        return "Product";
+        return "Product: "+name;
     }
     
     public void printProduct(){
-        System.out.println("ID:"+id);
-        System.out.println("Name:"+name);
+        System.out.println("ID: "+id);
+        System.out.println("Name: "+name);
         System.out.println(supplier);
         for(LineItem l:lineItems){
             System.out.println(l);

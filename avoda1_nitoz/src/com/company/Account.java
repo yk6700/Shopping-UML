@@ -51,7 +51,7 @@ public class Account {
         this.customer = customer;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
-        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), customer.getWebUser());
+        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), this, customer.getWebUser());
         lastOrder = null;
         /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
@@ -113,15 +113,15 @@ public class Account {
     
     @Override
     public String toString() {
-        return "Account";
+        return "Account: " + id;
     }
     
     public void printAccount(){
-        System.out.println("Billing Address:"+billing_address);
-        System.out.println("Balance:"+balance);
-        System.out.println("is closed:"+is_closed);
-        System.out.println("Open:"+open);
-        System.out.println("Closed"+closed);
+        System.out.println("Billing Address: "+billing_address);
+        System.out.println("Balance: "+balance);
+        System.out.println("is closed: "+is_closed);
+        System.out.println("Open: "+open);
+        System.out.println("Closed: "+closed);
         System.out.println(shoppingCart);
         System.out.println(customer);
         for(Order o :orders){

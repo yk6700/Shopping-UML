@@ -41,7 +41,7 @@ public class Supplier {
     
     @Override
     public String toString() {
-        return "Supplier";
+        return "Supplier: "+id;
     }
     
     public void printSupplier(){

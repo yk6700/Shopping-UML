@@ -16,7 +16,7 @@ public class DelayedPayment extends Payment{
     
     @Override
     public String toString() {
-        return "DelayedPayment";
+        return "DelayedPayment: "+id;
     }
     
     public void printPayment(){

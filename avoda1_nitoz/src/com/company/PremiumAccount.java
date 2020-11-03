@@ -25,19 +25,26 @@ public class PremiumAccount extends Account {
     
     @Override
     public String toString() {
-        return "PremiumAccount";
+        return "PremiumAccount: "+id;
     }
     
     @Override
     public void printAccount() {
+        System.out.println(this);
         super.printAccount();
+        System.out.println("Products:");
         for(Product p:products){
             System.out.println(p);
         }
     }
     
-    public void addProduct(Product p){
-        this.products.add(p);
+    public boolean addProduct(Product product){
+        if(product.getPremuimAccount() != null || products.contains(product))
+            return false;
+
+        products.add(product);
+        product.addPremuimAccount(this);
+        return true;
     }
 
     public ArrayList<Product> getProducts() {

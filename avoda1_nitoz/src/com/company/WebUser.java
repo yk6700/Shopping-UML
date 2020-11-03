@@ -68,7 +68,7 @@ public class WebUser {
     
     @Override
     public String toString() {
-        return "WebUser";
+        return "WebUser: "+login_id;
     }
     
     public void printWebUser(){

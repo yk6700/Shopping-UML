@@ -90,7 +90,7 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "Shopping Cart";
+        return "Shopping Cart: "+getWebUser().getLogin_id();
     }
 
     public void printShoppingCart(){

@@ -85,7 +85,7 @@ public class Customer {
     
     @Override
     public String toString() {
-        return "Customer";
+        return "Customer: "+id;
     }
     
     public void printCustomer(){

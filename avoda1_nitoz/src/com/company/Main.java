@@ -86,8 +86,13 @@ public class Main {
             }
             if(command.contains("Login WebUser")){
                 String id=getId(command);
-                String password=getPassword(in);
-                login(id,password);
+                if (!webUserHashMap.containsKey(id)){
+                    System.out.println("Web User doesnt exist");
+                }
+                else {
+                    String password=getPassword(in);
+                    login(id,password);
+                }
                 continue;
             }
             if(command.contains("Logout WebUser")){
@@ -104,7 +109,7 @@ public class Main {
                 continue;
             }
             if(command.contains("Link Product")){
-                String productName=command.substring(command.lastIndexOf("Product")+7);
+                String productName=command.substring(command.lastIndexOf("Product")+8);
                 linkToPremiumAccount(productName);
                 continue;
             }
@@ -113,7 +118,7 @@ public class Main {
                 continue;
             }
             if(command.contains("Delete Product")){
-                String name=command.substring(command.lastIndexOf("Product")+7);
+                String name=command.substring(command.lastIndexOf("Product")+8);
                 deleteProduct(name);
                 continue;
             }
@@ -134,6 +139,11 @@ public class Main {
     }
     
     private static void createUser(String id,Scanner in){
+        if (webUserHashMap.containsKey(id)){
+            System.out.println("WebUser already exist");
+            return;
+        }
+
         String input="";
         String password=getPassword(in);
         System.out.println("Please choose if you want to be premium account,type yes or no");
@@ -149,9 +159,14 @@ public class Main {
         String phone=in.nextLine();
         System.out.println("Please enter your email");
         String email=in.nextLine();
-        System.out.println("Please enter your balance");
+        System.out.println("Please enter your balance (numbers only)");
         String balanceStr=in.nextLine();
-        int balance=Integer.parseInt(balanceStr);
+        int balance = 100;
+        try {
+            balance=Integer.parseInt(balanceStr);
+        }catch (NumberFormatException e){
+            System.out.println("Since you didnt write numbers we decided it will be: 100");
+        }
         addUser(id,password,premiumAccount,address,phone,email,balance);
     }
     
@@ -173,9 +188,9 @@ public class Main {
         String productName=in.nextLine();
         System.out.println("Please enter supplier id");
         String supplierId=in.nextLine();
-        System.out.println("Please enter supplier name");
-        String supplierName=in.nextLine();
-        addProduct(id,productName,supplierId,supplierName);
+        //System.out.println("Please enter supplier name");
+        //String supplierName=in.nextLine();
+        addProduct(id,productName,supplierId);
     }
     
     
@@ -226,28 +241,6 @@ public class Main {
 
     }
 
-    /*
-    public static void removeUser(String id){
-        WebUser webUser = webUserHashMap.get(id);
-        //if(webUser != null || webUser instanceof WebUser)return;*********************************
-        //webUser.state = Banned;
-        shoppingCarts.remove(webUser.getShoppingCart());
-        Account toRemove=webUser.getCustomer().getAccount();
-        for(Order o:toRemove.orders){
-            if(orderHashMap.containsKey(o.getNumber())){
-                for(Payment p:o.getPaymentsArray()){
-                    if(paymentHashMap.containsKey(p.id)){
-                        paymentHashMap.remove(p.id);
-                    }
-                }
-                orderHashMap.remove(o.getNumber());
-            }
-        }
-        accountHashMap.remove(toRemove);
-        customerHashMap.remove(webUser.getCustomer().getId());
-        webUserHashMap.remove(id);
-    }
-    */
     
     
     public static boolean login(String id,String password) { //TODO should i check if he is already logged in?
@@ -335,7 +328,7 @@ public class Main {
     }}
 
     public static void displayOrder(){
-        onlineUser.getLastOrder().toString();
+        onlineUser.getLastOrder().printOrder();
     }
     
 
@@ -367,7 +360,7 @@ public class Main {
         */
     }
 
-    public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
+    public static boolean addProduct(String id, String name, String supplier_id){
         if (productHashMap.containsKey(name)){
             System.out.println("Product "+name+ " already exist");
             return false;
