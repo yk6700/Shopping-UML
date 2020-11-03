@@ -287,29 +287,32 @@ public class Main {
         onlineUser = null;
         return true;
     }
-/*
+
     public static void makeOrder(Scanner in){
-        System.out.println("Please enter user name");
-        String userName = in.nextLine();
-        //String Id = webUserHashMap.get(userName).getCustomer().getId();
-        Account saler = accountHashMap.get(userName);
-        ArrayList<Order> orders = saler.getOrders();
+        if (onlineUser != null){
+        System.out.println("Please enter user name that you want to buy from");
+        Account sell = null;
+        do {
+            String userName = in.nextLine();
+            //String Id = webUserHashMap.get(userName).getCustomer().getId();
+            sell = accountHashMap.get(userName);
+            if (!(sell instanceof PremuimAccount))
+                System.out.println("Please choose a premium account");
+        }while (!(sell instanceof PremuimAccount));
+
+        ArrayList<Order> orders = sell.getOrders();
 
         System.out.println("You can choose those products:");
 
-        for(Order o:orders)
-        {
-            if (o.getStatus() == OrderStatus.Hold)
-            {
-                for(LineItem lineItem: o.getLineArray())
-                {
-                    System.out.print("You can buy max of " + lineItem.getQuantity() + " of " + lineItem.getProduct().getName());
-                    System.out.println(" the ID product is: " + lineItem.getProduct().getId());
-                }
-            }
-        }
+
+        //Print Options
+        PremuimAccount sellPremuim = (PremuimAccount) sell;
+        ArrayList<Product> products = sellPremuim.getProducts();
+        for (Product product: products)
+            product.printProduct();
 
 
+        //Ask
         System.out.println("Which item ID would you want?");
         String id = in.nextLine();
         System.out.println("How much do you want to buy?");
@@ -322,44 +325,22 @@ public class Main {
             System.out.println("Please enter number"); }//TODO fix
 
 
-        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new Address(saler.getBilling_address()), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), onlineUser.getCustomer().getAddress(), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+
         objects.put(objectId, order);
         objectId++;
 
-        //LineItem lineItem = new LineItem(quantilyInt, 666, saler.getShoppingCart(), order, );
+        //LineItem lineItem = new LineItem(quantilyInt, 666, sell.getShoppingCart(), order, );
 
         onlineUser.getCustomer().getAccount().addOrder(order);
-        for(Order o:orders)
-        {
-            if (o.getStatus() == OrderStatus.Hold)
-            {
-                for( LineItem lineItem:o.getLineArray())
-                {
-                    if (lineItem.getProduct().getId().equals(id))
-                    {
-                        if(quantilyInt > lineItem.getQuantity())
-                            System.out.println("The max of that product is - " + lineItem.getQuantity());
-                        else{
-
-                        }
-                    }
-                }
-            }
-        }
 
         System.out.println("Would you want to buy more? (yes or no)");
         String anser = in.nextLine();
-    }
-
-    /*private static LineItem chooseItem(Scanner in, ArrayList<Order> orders)
-    {
-
-    }
-    
+    }}
 
     public static void displayOrder(){
         onlineUser.getLastOrder().toString();
-    }*/
+    }
     
 
     public static boolean linkToPremiumAccount(String id){
