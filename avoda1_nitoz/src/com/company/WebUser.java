@@ -74,6 +74,7 @@ public class WebUser {
     }
     
     public void printWebUser(){
+        System.out.println("Login ID:"+login_id);
         System.out.println("Password:"+this.password);
         System.out.println("State:"+state);
         System.out.println(customer);

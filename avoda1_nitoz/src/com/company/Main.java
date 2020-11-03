@@ -63,7 +63,7 @@ public class Main {
         String command="";
         Scanner in=new Scanner(System.in);
         do{
-            System.out.println("Please enter your command or type exit to exit\nOptions:");
+            System.out.println("Please type your command(not the number) or type exit to exit\nOptions:");
             System.out.println("1. Add WebUser");
             System.out.println("2. Remove WebUser");
             System.out.println("3. Login WebUser");
@@ -218,6 +218,10 @@ public class Main {
             paymentHashMap.entrySet().removeIf(payment -> paymentHashMap.get(payment).getAccount() == null);
             LineItemsList.removeIf(lineItem -> lineItem.getShoppingCart() == null);
 
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof WebUser)&&(((WebUser)objects.get(o)).getCustomer() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Customer)&&(((Customer)objects.get(o)).getAccount() == null));
+            objects.keySet().removeIf(o -> (objects.get(o) instanceof Account)&&(((Account)objects.get(o)).getCustomer() == null));
+
             objects.keySet().removeIf(o -> (objects.get(o) instanceof LineItem)&&(((LineItem)objects.get(o)).getProduct() == null));
             objects.keySet().removeIf(o -> (objects.get(o) instanceof Payment)&&(((Payment)objects.get(o)).getAccount() == null));
             objects.keySet().removeIf(o -> (objects.get(o) instanceof Order)&&(((Order)objects.get(o)).getAccount() == null));
@@ -283,7 +287,7 @@ public class Main {
         onlineUser = null;
         return true;
     }
-
+/*
     public static void makeOrder(Scanner in){
         System.out.println("Please enter user name");
         String userName = in.nextLine();
@@ -318,14 +322,14 @@ public class Main {
             System.out.println("Please enter number"); }//TODO fix
 
 
-        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), saler.getBilling_address(), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new Address(saler.getBilling_address()), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
         objects.put(objectId, order);
         objectId++;
 
         //LineItem lineItem = new LineItem(quantilyInt, 666, saler.getShoppingCart(), order, );
 
         onlineUser.getCustomer().getAccount().addOrder(order);
-        /*for(Order o:orders)
+        for(Order o:orders)
         {
             if (o.getStatus() == OrderStatus.Hold)
             {
@@ -341,7 +345,7 @@ public class Main {
                     }
                 }
             }
-        }*/
+        }
 
         System.out.println("Would you want to buy more? (yes or no)");
         String anser = in.nextLine();
@@ -350,18 +354,40 @@ public class Main {
     /*private static LineItem chooseItem(Scanner in, ArrayList<Order> orders)
     {
 
-    }*/
+    }
+    
 
     public static void displayOrder(){
-        onlineUser.getCustomer().getAccount().getLastOrder().toString();
-    }
+        onlineUser.getLastOrder().toString();
+    }*/
+    
 
     public static boolean linkToPremiumAccount(String id){
-        if(onlineUser.getCustomer().getAccount() instanceof PremuimAccount){
-            ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct((Product)objects.get(Integer.parseInt(id)));
+
+
+        if (!productHashMap.containsKey(id)){
+            System.out.println("Product "+id+" dose'nt exist");
+            return false;
+        }
+        if (onlineUser == null || !(onlineUser.getCustomer().getAccount() instanceof PremuimAccount)){
+            System.out.println("There are no premium accounts that are connected right now");
+            return false;
+        }
+        Product product = productHashMap.get(id);
+        if (product.getPremuimAccount() != null){
+            System.out.println("Product "+id+" already connected to a Premium account");
+            return false;
+        }
+        ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct(product);
+        return true;
+
+        /*
+        if(onlineUser.isPremiumAccount()){
+            onlineUser.addProductToPremium((Product)objects.get(Integer.parseInt(id)));
             return true;
         }
         return false;
+        */
     }
 
     public static boolean addProduct(String id, String name, String supplier_id, String supplier_name){
