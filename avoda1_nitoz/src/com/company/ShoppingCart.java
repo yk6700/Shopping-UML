@@ -65,8 +65,8 @@ public class ShoppingCart {
     public boolean removeShoppingCart() {
         if (account != null){
             boolean ar = true;
-            if (account instanceof PremuimAccount){
-                ar = ((PremuimAccount)account).removePremuimAccount();
+            if (account instanceof PremiumAccount){
+                ar = ((PremiumAccount)account).removePremuimAccount();
             }
             else {
                 ar = account.removeAccount();

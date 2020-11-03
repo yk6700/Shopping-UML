@@ -1,11 +1,6 @@
 package com.company;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import javax.sound.sampled.Line;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -57,8 +52,8 @@ public class Main {
 
         addUser("Dani", "Dani123", false, new Address("Ashdod"), "0521111111", "Dani@bgu",100);
         addUser("Dana", "Dana123",true, new Address("Beer Sheba"), "0523456789", "Dana@bgu",100);
-        PremuimAccount premuimAccount = (PremuimAccount) accountHashMap.get("Dana");
-        premuimAccount.addProduct(p1);
+        PremiumAccount premiumAccount = (PremiumAccount) accountHashMap.get("Dana");
+        premiumAccount.addProduct(p1);
         ///////////////////////////////////////////////////
         String command="";
         Scanner in=new Scanner(System.in);
@@ -350,7 +345,7 @@ public class Main {
             System.out.println("Product "+id+" dose'nt exist");
             return false;
         }
-        if (onlineUser == null || !(onlineUser.getCustomer().getAccount() instanceof PremuimAccount)){
+        if (onlineUser == null || !(onlineUser.getCustomer().getAccount() instanceof PremiumAccount)){
             System.out.println("There are no premium accounts that are connected right now");
             return false;
         }
@@ -359,7 +354,7 @@ public class Main {
             System.out.println("Product "+id+" already connected to a Premium account");
             return false;
         }
-        ((PremuimAccount)onlineUser.getCustomer().getAccount()).addProduct(product);
+        ((PremiumAccount)onlineUser.getCustomer().getAccount()).addProduct(product);
         return true;
 
         /*

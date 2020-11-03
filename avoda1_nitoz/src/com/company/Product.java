@@ -7,7 +7,7 @@ public class Product {
     private String name;
     private Supplier supplier;
     private ArrayList<LineItem> lineItems;
-    private PremuimAccount premuimAccount;
+    private PremiumAccount premiumAccount;
 
     public Product(String id, String name, Supplier supplier) {
         this.id = id;
@@ -39,8 +39,8 @@ public class Product {
         return lineItems;
     }
 
-    public PremuimAccount getPremuimAccount() {
-        return premuimAccount;
+    public PremiumAccount getPremuimAccount() {
+        return premiumAccount;
     }
 
     public void setId(String id) {
@@ -55,16 +55,16 @@ public class Product {
         this.supplier = supplier;
     }
 
-    public void setPremuimAccount(PremuimAccount premuimAccount) {
-        this.premuimAccount = premuimAccount;
+    public void setPremuimAccount(PremiumAccount premiumAccount) {
+        this.premiumAccount = premiumAccount;
     }
 
-    public boolean addPremuimAccount(PremuimAccount pa) {
-        if (premuimAccount != null) {
+    public boolean addPremuimAccount(PremiumAccount pa) {
+        if (premiumAccount != null) {
             return false;
         }
 
-        premuimAccount = pa;
+        premiumAccount = pa;
         return true;
     }
 
@@ -87,9 +87,9 @@ public class Product {
             supplier.getProducts().remove(this.id);
             supplier = null;
         }
-        if (premuimAccount != null){
-            premuimAccount.getProducts().remove(this.id);
-            premuimAccount = null;
+        if (premiumAccount != null){
+            premiumAccount.getProducts().remove(this.id);
+            premiumAccount = null;
         }
         return true;
     }
@@ -106,8 +106,8 @@ public class Product {
         for(LineItem l:lineItems){
             System.out.println(l);
         }
-        if(premuimAccount!=null){
-            System.out.println(premuimAccount);
+        if(premiumAccount !=null){
+            System.out.println(premiumAccount);
         }
     }
 }
