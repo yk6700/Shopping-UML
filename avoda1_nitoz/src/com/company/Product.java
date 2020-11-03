@@ -1,10 +1,6 @@
 package com.company;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Product {
     private String id;
@@ -107,11 +103,11 @@ public class Product {
         System.out.println("ID:"+id);
         System.out.println("Name:"+name);
         System.out.println(supplier);
-        if(premuimAccount!=null){
-            System.out.println(premuimAccount);
-        }
         for(LineItem l:lineItems){
             System.out.println(l);
+        }
+        if(premuimAccount!=null){
+            System.out.println(premuimAccount);
         }
     }
 }

@@ -95,8 +95,8 @@ public class ShoppingCart {
 
     public void printShoppingCart(){
         System.out.println("created: "+created.toString());
-        System.out.println("Account: "+account.toString());
-        System.out.println("WebUser: "+webUser.toString());
+        System.out.println(account);
+        System.out.println(webUser);
         for(LineItem lineItem:lineItems){
             System.out.println(lineItem);
         }

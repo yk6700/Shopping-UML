@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Account {
     protected String id;
-    protected Address billing_address;
+    protected String billing_address;
     protected boolean is_closed;
     protected Date open;
     protected Date closed;
@@ -19,30 +19,6 @@ public class Account {
 
     public ArrayList<Order> getOrders() {
         return orders;
-    }
-
-    public Address getBilling_address() {
-        return billing_address;
-    }
-
-    public boolean isIs_closed() {
-        return is_closed;
-    }
-
-    public Date getOpen() {
-        return open;
-    }
-
-    public Date getClosed() {
-        return closed;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public ArrayList<Payment> getPayments() {
-        return payments;
     }
 
     public String getId() {
@@ -61,7 +37,11 @@ public class Account {
         this.customer = customer;
     }
 
-    public Account(String id, Address billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
+    public String getBilling_address() {
+        return billing_address;
+    }
+
+    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
@@ -71,7 +51,7 @@ public class Account {
         this.customer = customer;
         payments=new ArrayList<>();
         orders=new ArrayList<>();
-        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), this, customer.getWebUser());
+        shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), customer.getAccount(), customer.getWebUser());
         lastOrder = null;
         /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
             this.shoppingCart = shoppingCart;
@@ -97,7 +77,6 @@ public class Account {
             this.orders.add(o);
             lastOrder = o;
         }
-
     }
 
     public boolean removeAccount() {
@@ -145,13 +124,11 @@ public class Account {
         System.out.println("Closed"+closed);
         System.out.println(shoppingCart);
         System.out.println(customer);
-        for(Order o:orders){
+        for(Order o :orders){
             System.out.println(o);
         }
-        for(Payment p:payments){
+        for(Payment p :payments){
             System.out.println(p);
         }
     }
-
-
 }
