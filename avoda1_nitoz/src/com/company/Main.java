@@ -328,12 +328,21 @@ public class Main {
     }}
 
     public static void displayOrder(){
+        if(onlineUser == null){
+            System.out.println("There is no one logged in");
+            return;
+        }
+
+        if(onlineUser.getLastOrder() == null){
+            System.out.println("no last order for the online user");
+            return;
+        }
+
         onlineUser.getLastOrder().printOrder();
     }
     
 
     public static boolean linkToPremiumAccount(String id){
-
 
         if (!productHashMap.containsKey(id)){
             System.out.println("Product "+id+" dose'nt exist");
