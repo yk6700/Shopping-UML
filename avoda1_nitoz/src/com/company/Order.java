@@ -114,7 +114,7 @@ public class Order {
     
     @Override
     public String toString() {
-        return "Order";
+        return "Order: "+number;
     }
 
     public ArrayList<LineItem> getLineArray() {
@@ -128,6 +128,7 @@ public class Order {
         System.out.println("Status:"+status.name());
         System.out.println("total:"+total);
         System.out.println(account);
+        System.out.println("Payments: ");
         for(Payment p:paymentsArray){
             System.out.println(p);
         }

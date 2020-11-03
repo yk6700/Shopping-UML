@@ -16,7 +16,7 @@ public class ImmediatePayment extends Payment {
     
     @Override
     public String toString() {
-        return "ImmediatePayment";
+        return "ImmediatePayment: "+id;
     }
     
     public void printPayment(){

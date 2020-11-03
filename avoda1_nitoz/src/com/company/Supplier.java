@@ -1,5 +1,6 @@
 package com.company;
 
+import javafx.util.Pair;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Supplier {
     
     @Override
     public String toString() {
-        return "Supplier";
+        return "Supplier: "+id;
     }
     
     public void printSupplier(){

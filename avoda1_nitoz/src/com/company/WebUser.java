@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Calendar;
-
 import static com.company.UserState.New;
 
 public class WebUser {
@@ -70,15 +68,28 @@ public class WebUser {
     
     @Override
     public String toString() {
-        return "WebUser";
+        return "WebUser: "+login_id;
     }
     
     public void printWebUser(){
+        System.out.println("Login ID:"+login_id);
         System.out.println("Password:"+this.password);
         System.out.println("State:"+state);
         System.out.println(customer);
         if(shoppingCart!=null){
             System.out.println(shoppingCart);
         }
+    }
+
+    public Order getLastOrder(){
+        return getCustomer().getAccount().getLastOrder();
+    }
+
+    public boolean isPremiumAccount(){
+        return (getCustomer().getAccount() instanceof PremiumAccount);
+    }
+
+    public void addProductToPremium(Product product){
+        ((PremiumAccount)getCustomer().getAccount()).addProduct(product);
     }
 }

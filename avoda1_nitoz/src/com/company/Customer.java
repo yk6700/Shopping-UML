@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Customer {
     private String id;
@@ -19,9 +18,9 @@ public class Customer {
         this.webUser=webUser;
 
         if (isPremium)
-            account = new PremuimAccount(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
+            account = new PremiumAccount(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
         else
-            account = new Account(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
+            account = new Account(id, address.getAddress(), true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
     }
     
     public String getId() {
@@ -86,7 +85,7 @@ public class Customer {
     
     @Override
     public String toString() {
-        return "Customer";
+        return "Customer: "+id;
     }
     
     public void printCustomer(){
