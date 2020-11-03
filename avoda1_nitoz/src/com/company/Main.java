@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -291,9 +292,9 @@ public class Main {
             String userName = in.nextLine();
             //String Id = webUserHashMap.get(userName).getCustomer().getId();
             sell = accountHashMap.get(userName);
-            if (!(sell instanceof PremuimAccount))
+            if (!(sell instanceof PremiumAccount))
                 System.out.println("Please choose a premium account");
-        }while (!(sell instanceof PremuimAccount));
+        }while (!(sell instanceof PremiumAccount));
 
         ArrayList<Order> orders = sell.getOrders();
 
@@ -301,7 +302,7 @@ public class Main {
 
 
         //Print Options
-        PremuimAccount sellPremuim = (PremuimAccount) sell;
+        PremiumAccount sellPremuim = (PremiumAccount) sell;
         ArrayList<Product> products = sellPremuim.getProducts();
         for (Product product: products)
             product.printProduct();

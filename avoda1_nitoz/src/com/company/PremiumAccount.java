@@ -3,12 +3,12 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PremuimAccount extends Account {
+public class PremiumAccount extends Account {
     
     private ArrayList<Product> products;
     
-    public PremuimAccount(String id, Address billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
-        super(id, billing_address, is_closed, open, closed, balance, customer);
+    public PremiumAccount(String id, Address billing_address, boolean is_closed, Date open, Date closed, int balance, Customer customer) {
+        super(id, billing_address.getAddress(), is_closed, open, closed, balance, customer);
         products=new ArrayList<>();
     }
 

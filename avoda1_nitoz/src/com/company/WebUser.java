@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Calendar;
-
 import static com.company.UserState.New;
 
 public class WebUser {
@@ -88,10 +86,10 @@ public class WebUser {
     }
 
     public boolean isPremiumAccount(){
-        return (getCustomer().getAccount() instanceof PremuimAccount);
+        return (getCustomer().getAccount() instanceof PremiumAccount);
     }
 
     public void addProductToPremium(Product product){
-        ((PremuimAccount)getCustomer().getAccount()).addProduct(product);
+        ((PremiumAccount)getCustomer().getAccount()).addProduct(product);
     }
 }
