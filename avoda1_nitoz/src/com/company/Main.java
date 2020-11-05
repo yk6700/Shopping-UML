@@ -118,7 +118,7 @@ public class Main {
                 String id=command.substring(command.lastIndexOf("Id")+3);
                 displaySpecificObject(id);
             }
-            else {
+            else if (!command.equals("exit")){
                 System.out.println("Invalid command");
             }
         }
