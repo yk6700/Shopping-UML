@@ -3,6 +3,7 @@ package com.company;
 import java.util.Date;
 
 public abstract class Payment {
+    private static int idS = 1;
     protected String id;
     protected Date paid;
     protected float total;
@@ -10,8 +11,9 @@ public abstract class Payment {
     private Order order;
     private Account account;
 
-    public Payment(String id, Date paid, float total, String details, Order order, Account account) {
-        this.id = id;
+    public Payment(Date paid, float total, String details, Order order, Account account) {
+        this.id = String.valueOf(idS);
+        idS++;
         this.paid = paid;
         this.total = total;
         this.details = details;
@@ -75,12 +77,13 @@ public abstract class Payment {
         order = null;
         return true;
     }
-    
+
+
     
     public void printPayment(){
-        System.out.println("Paid Date:"+paid.getTime());
-        System.out.println("Total:"+total);
-        System.out.println("Details:"+details);
+        System.out.println("Paid Date: "+paid.getTime());
+        System.out.println("Total: "+total);
+        System.out.println("Details: "+details);
         System.out.println(account);
         System.out.println(order);
     }

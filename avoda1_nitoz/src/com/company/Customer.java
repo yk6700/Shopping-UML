@@ -18,9 +18,9 @@ public class Customer {
         this.webUser=webUser;
 
         if (isPremium)
-            account = new PremiumAccount(id, address, true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
+            account = new PremiumAccount(id, address, false, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance, this);
         else
-            account = new Account(id, address.getAddress(), true, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
+            account = new Account(id, address.getAddress(), false, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), balance,  this);
     }
     
     public String getId() {

@@ -8,15 +8,39 @@ public class Product {
     private Supplier supplier;
     private ArrayList<LineItem> lineItems;
     private PremiumAccount premiumAccount;
+    private int price;
+    private int quantity;
 
     public Product(String id, String name, Supplier supplier) {
         this.id = id;
         this.name = name;
-
+        price = 1;
+        quantity = 0;
         this.supplier = supplier;
         boolean added = this.supplier.addProduct(this);
         
         lineItems = new ArrayList<>();
+    }
+
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPremiumAccount(PremiumAccount premiumAccount) {
+        this.premiumAccount = premiumAccount;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void setLineItems(ArrayList<LineItem> lineItems) {
@@ -78,8 +102,8 @@ public class Product {
 
     public boolean removeProduct(){
         if (lineItems != null){
-            for (LineItem item:lineItems) {
-                item.removeItem();
+            while (lineItems.size() > 0){
+                lineItems.get(0).removeItem();
             }
             lineItems = null;
         }
@@ -88,7 +112,7 @@ public class Product {
             supplier = null;
         }
         if (premiumAccount != null){
-            premiumAccount.getProducts().remove(this.id);
+            premiumAccount.getProducts().remove(this);
             premiumAccount = null;
         }
         return true;
@@ -102,6 +126,8 @@ public class Product {
     public void printProduct(){
         System.out.println("ID: "+id);
         System.out.println("Name: "+name);
+        System.out.println("Price: "+price);
+        System.out.println("Quantity: "+quantity);
         System.out.println(supplier);
         for(LineItem l:lineItems){
             System.out.println(l);

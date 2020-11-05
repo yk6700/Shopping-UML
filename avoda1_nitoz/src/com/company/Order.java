@@ -1,12 +1,13 @@
 package com.company;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
     private String number;
-    private Date ordered;
-    private Date shipped;
+    private LocalDate ordered;
+    private LocalDate shipped;
     private Address ship_to;
     private OrderStatus status;
     private float total;
@@ -15,11 +16,11 @@ public class Order {
     private ArrayList<Payment> paymentsArray;
     private static int counter = 0;
 
-    public Order(Date ordered, Date shipprd, Address ship_to, OrderStatus status, float total, Account account) {
+    public Order(Address ship_to, OrderStatus status, float total, Account account) {
         this.number = String.valueOf(counter);
         counter++;
-        this.ordered = ordered;
-        this.shipped = shipprd;
+        this.ordered = LocalDate.now();
+        this.shipped = LocalDate.now().plusDays(14);
         this.ship_to = ship_to;
         this.status = status;
         this.total = total;
@@ -30,11 +31,48 @@ public class Order {
         this.account.addOrder(this);
     }
 
-    public Date getOrdered() {
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setOrdered(LocalDate ordered) {
+        this.ordered = ordered;
+    }
+
+    public void setShipped(LocalDate shipped) {
+        this.shipped = shipped;
+    }
+
+    public void setShip_to(Address ship_to) {
+        this.ship_to = ship_to;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setLineArray(ArrayList<LineItem> lineArray) {
+        this.lineArray = lineArray;
+    }
+
+    public void setPaymentsArray(ArrayList<Payment> paymentsArray) {
+        this.paymentsArray = paymentsArray;
+    }
+
+    public LocalDate getOrdered() {
         return ordered;
     }
 
-    public Date getShipped() {
+    public LocalDate getShipped() {
         return shipped;
     }
 
@@ -80,8 +118,8 @@ public class Order {
             paymentsArray = null;
         }
         if (lineArray != null){
-            for (LineItem item : lineArray) {
-                item.removeItem();
+            while (lineArray.size() > 0){
+                lineArray.get(0).removeItem();
             }
             lineArray = null;
         }
@@ -122,15 +160,23 @@ public class Order {
     }
     
     public void printOrder(){
-        System.out.println("Ordered Date:"+ordered);
-        System.out.println("shipped:"+shipped);
-        System.out.println("ship to:"+ship_to.getAddress());
-        System.out.println("Status:"+status.name());
-        System.out.println("total:"+total);
+        System.out.println("Ordered Date: "+ordered);
+        System.out.println("shipped: "+shipped);
+        System.out.println("ship to: "+ship_to.getAddress());
+        System.out.println("Status: "+status.name());
+        System.out.println("total: "+total);
         System.out.println(account);
-        System.out.println("Payments: ");
-        for(Payment p:paymentsArray){
-            System.out.println(p);
+        if (lineArray != null){
+            System.out.println("Items:");
+            for (LineItem item:lineArray) {
+                System.out.println(item+" ,quantity: "+item.getQuantity()+" ,price: "+item.getPrice());
+            }
+        }
+        System.out.println("Payments:");
+        if (paymentsArray != null) {
+            for (Payment p : paymentsArray) {
+                System.out.println(p);
+            }
         }
         
     }

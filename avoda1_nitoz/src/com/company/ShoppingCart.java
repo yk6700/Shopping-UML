@@ -19,14 +19,6 @@ public class ShoppingCart {
         lineItems=new ArrayList<>();
 
 
-        /*if(account.getShoppingCart()==null && webUser.getShoppingCart()==null){
-            this.webUser=webUser;
-            this.webUser.setShoppingCart(this);
-            this.account=account;
-        }
-        else{
-            throw new RuntimeException("Shopping cart can be connected only to one account and one web user");
-        }*/
     }
 
 
@@ -63,6 +55,15 @@ public class ShoppingCart {
     }
 
     public boolean removeShoppingCart() {
+
+        if (lineItems != null){
+            while (lineItems.size() > 0){
+                boolean ir = lineItems.get(0).removeItem();
+            }
+            lineItems = null;
+        }
+
+
         if (account != null){
             boolean ar = true;
             if (account instanceof PremiumAccount){
@@ -76,13 +77,6 @@ public class ShoppingCart {
                 account.setShoppingCart(null);
                 account = null;
             }
-        }
-
-        if (lineItems != null){
-            for (LineItem item : lineItems) {
-                boolean ir = item.removeItem();
-            }
-            lineItems = null;
         }
 
         return true;

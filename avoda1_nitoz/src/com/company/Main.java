@@ -1,9 +1,7 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 
 public class Main {
@@ -23,19 +21,7 @@ public class Main {
     public static WebUser onlineUser = null;
     
     public static void main(String[] args) {
-        /*
-        supplierHashMap.put("123", new Supplier("123", "Moshe"));
-        productHashMap.put("Bamba", new Product("Bamba", "Bamba", supplierHashMap.get("123")));
-        productHashMap.put("Ramen", new Product("Ramen", "Ramen", supplierHashMap.get("123")));
 
-        webUserHashMap.put("Dani", new WebUser("Dani", "Dani123", new Address("Ashdod"), "0521111111", "Dani@bgu", false, 0));
-        webUserHashMap.put("Dana", new WebUser("Dana", "Dana123", new Address("Beer Sheba"), "0523456789", "Dana@bgu", true, 0));
-
-        accountHashMap.put("Dani", webUserHashMap.get("Dani").getCustomer().getAccount());
-        accountHashMap.put("Dana", webUserHashMap.get("Dana").getCustomer().getAccount());
-
-        ((PremuimAccount)accountHashMap.get("Dana")).addProduct(productHashMap.get("Bamba"));
-        */
         Supplier s1 = new Supplier("123","Moshe");
         supplierHashMap.put("123",s1);
         objects.put(objectId,s1);
@@ -54,23 +40,25 @@ public class Main {
         addUser("Dani", "Dani123", false, new Address("Ashdod"), "0521111111", "Dani@bgu",100);
         addUser("Dana", "Dana123",true, new Address("Beer Sheba"), "0523456789", "Dana@bgu",100);
         PremiumAccount premiumAccount = (PremiumAccount) accountHashMap.get("Dana");
+        p1.setPrice(1);
+        p1.setQuantity(100);
         premiumAccount.addProduct(p1);
         ///////////////////////////////////////////////////
         String command="";
         Scanner in=new Scanner(System.in);
         do{
             System.out.println("Please type your command(not the number) or type exit to exit\nOptions:");
-            System.out.println("1. Add WebUser");
-            System.out.println("2. Remove WebUser");
-            System.out.println("3. Login WebUser");
-            System.out.println("4. Logout WebUser");
+            System.out.println("1. Add WebUser [login_id]");
+            System.out.println("2. Remove WebUser [login_id]");
+            System.out.println("3. Login WebUser [login_id]");
+            System.out.println("4. Logout WebUser [login_id]");
             System.out.println("5. Make order");
             System.out.println("6. Display order");
-            System.out.println("7. Link Product");
+            System.out.println("7. Link Product [Product_name]");
             System.out.println("8. Add Product");
-            System.out.println("9. Delete Product");
-            System.out.println("10. Show All Objects");
-            System.out.println("11. Show Object Id");
+            System.out.println("9. Delete Product [Product_name]");
+            System.out.println("10. ShowAllObjects");
+            System.out.println("11. ShowObjectId [Id]");
             System.out.println("12. exit");
 
             command=in.nextLine();
@@ -101,7 +89,7 @@ public class Main {
                 continue;
             }
             if(command.equals("Make order")){
-                option5(in);
+                makeOrder(in);
                 continue;
             }
             if(command.equals("Display order")){
@@ -122,18 +110,26 @@ public class Main {
                 deleteProduct(name);
                 continue;
             }
-            if(command.equals("Show All Objects")){
+            if(command.equals("ShowAllObjects")){
                 displayObjects();
                 continue;
             }
-            if(command.contains("Show Object Id")){
+            if(command.contains("ShowObjectId")){
                 String id=command.substring(command.lastIndexOf("Id")+3);
                 displaySpecificObject(id);
+            }
+            else {
+                System.out.println("Invalid command");
             }
         }
         while(!command.equals("exit"));
     }
-    
+
+    public static void addObject(Object o){
+        objects.put(objectId,o);
+        objectId++;
+    }
+
     private static String getId(String command){
         return command.substring(command.lastIndexOf("User")+5);
     }
@@ -175,12 +171,7 @@ public class Main {
         return in.nextLine();
     }
     
-    private static void option5(Scanner in){
-        System.out.println("please enter user id you want to buy from him");
-        String userId=in.nextLine();
-        
-    }
-    
+
     private static void createProduct(Scanner in){
         System.out.println("Please enter product id");
         String id=in.nextLine();
@@ -225,8 +216,8 @@ public class Main {
             accountHashMap.remove(webUser.getLogin_id());
             customerHashMap.remove(webUser.getLogin_id());
             shoppingCarts.removeIf(shoppingCart -> shoppingCart.getWebUser() == null);
-            orderHashMap.entrySet().removeIf(order -> orderHashMap.get(order).getAccount() == null);
-            paymentHashMap.entrySet().removeIf(payment -> paymentHashMap.get(payment).getAccount() == null);
+            orderHashMap.keySet().removeIf(order -> orderHashMap.get(order).getAccount() == null);
+            paymentHashMap.keySet().removeIf(payment -> paymentHashMap.get(payment).getAccount() == null);
             LineItemsList.removeIf(lineItem -> lineItem.getShoppingCart() == null);
 
             objects.keySet().removeIf(o -> (objects.get(o) instanceof WebUser)&&(((WebUser)objects.get(o)).getCustomer() == null));
@@ -263,7 +254,7 @@ public class Main {
     }
 
 
-    public static boolean logout(String id){ //TODO should i check if he is already logged out?
+    public static boolean logout(String id){
         if (!webUserHashMap.containsKey(id)){
             System.out.println("Web User doesnt exist");
             return false;
@@ -278,54 +269,150 @@ public class Main {
     }
 
     public static void makeOrder(Scanner in){
-        if (onlineUser != null){
-        System.out.println("Please enter user name that you want to buy from");
-        Account sell = null;
+
+        if (onlineUser == null){
+            System.out.println("No one logged in");
+            return;
+        }
+
+        System.out.println("Sellers list:");
+        int i = 1;
+        for (Account account:accountHashMap.values()) {
+            if (account instanceof PremiumAccount && !account.getId().equals(onlineUser.getLogin_id())){
+                System.out.println(i+") "+account.getId());
+                i++;
+            }
+        }
+        if (i == 1){
+            System.out.println("There is no one to buy from");
+            return;
+        }
+
+        System.out.println("Enter user name from the list above that you want to buy from:");
+        String userName = in.nextLine();
+        if (!accountHashMap.containsKey(userName)){
+            System.out.println("User dose'nt exist");
+            return;
+        }
+        Account seller = accountHashMap.get(userName);
+        if (!(seller instanceof PremiumAccount)){
+            System.out.println("User can't sell products");
+            return;
+        }
+        PremiumAccount pSell = (PremiumAccount)seller;
+        if (pSell.getProducts().size() == 0){
+            System.out.println("Seller dose'nt have any products to sell at the moment");
+            return;
+        }
+
+        ArrayList<LineItem> items = new ArrayList<>();
+        Order order = new Order(onlineUser.getCustomer().getAddress(),OrderStatus.New,0,onlineUser.getCustomer().getAccount());
+        float total = 0;
+        boolean buy = true;
+
         do {
-            String userName = in.nextLine();
-            //String Id = webUserHashMap.get(userName).getCustomer().getId();
-            sell = accountHashMap.get(userName);
-            if (!(sell instanceof PremiumAccount))
-                System.out.println("Please choose a premium account");
-        }while (!(sell instanceof PremiumAccount));
+            System.out.println("Products list:");
+            i = 1;
+            for (Product product : pSell.getProducts()) {
+                System.out.println(i + ") " + product.getName());
+                System.out.println("\tPrice: "+product.getPrice());
+                System.out.println("\tQuantity: "+product.getQuantity());
+            }
 
-        ArrayList<Order> orders = sell.getOrders();
+            System.out.println("Choose one of the Products above that you would like to purchase: (Choose By Name)");
+            String productName = in.nextLine();
+            if (!productHashMap.containsKey(productName)) {
+                System.out.println("Product dosent exist");
+                continue;
+            }
+            Product product = productHashMap.get(productName);
+            if (!pSell.getProducts().contains(product)) {
+                System.out.println("Product not on the list");
+                continue;
+            }
+            System.out.println("How many units of that product would you like to purchase:");
+            String quantityS = in.nextLine();
+            int quantity = 1;
+            try {
+                quantity = Integer.parseInt(quantityS);
+            } catch (Exception e) {
+                System.out.println("not a number so 1 it is");
+            }
 
-        System.out.println("You can choose those products:");
+            if (quantity > product.getQuantity()){
+                System.out.println("Not enough units available from that product");
+                continue;
+            }
+
+            product.setQuantity(product.getQuantity()-quantity);
+            LineItem item = new LineItem(quantity, product.getPrice(), onlineUser.getShoppingCart(), order, product);
+            items.add(item);
+            total += product.getPrice() * quantity;
+
+            System.out.println("Would you like to continue buying? (Write yes OR no):");
+            String ctb = in.nextLine();
+            if (ctb.contains("yes")){
+                buy = true;
+            }
+            else
+                buy = false;
+
+        }while (buy);
 
 
-        //Print Options
-        PremiumAccount sellPremuim = (PremiumAccount) sell;
-        ArrayList<Product> products = sellPremuim.getProducts();
-        for (Product product: products)
-            product.printProduct();
+        ArrayList<Payment> pays = new ArrayList<>();
+        System.out.println("choose method of payment: (1 for ImmediatePayment, and 2 for DelayedPayment)");
+        String type = in.nextLine();
+        boolean pay = true;
+        if (type.contains("1")){
+            pay = true;
+        }
+        else {
+            pay = false;
+        }
 
+        System.out.println("choose in how many payments would you like to distribute the amount:");
+        String amount = in.nextLine();
 
-        //Ask
-        System.out.println("Which item ID would you want?");
-        String id = in.nextLine();
-        System.out.println("How much do you want to buy?");
-        String quantilyStr = in.nextLine();
+        int amt = 1;
+        try {
+            amt = Integer.parseInt(amount);
+        } catch (Exception e) {
+            System.out.println("not a number so 1 it is");
+        }
 
-        int quantilyInt = 0;
-        try{
-        quantilyInt = Integer.parseInt(quantilyStr);}
-        catch (Exception e){
-            System.out.println("Please enter number"); }//TODO fix
+        System.out.println("Enter payments massage:");
+        String msg = in.nextLine();
 
+        for (int j = 0; j<amt; j++){
+            if (pay){
+                Payment p = new ImmediatePayment(Calendar.getInstance().getTime(),(total/amt),msg,order,onlineUser.getCustomer().getAccount(),true);
+                pays.add(p);
+            }
+            else {
+                Payment p = new DelayedPayment(Calendar.getInstance().getTime(),(total/amt),msg,order,onlineUser.getCustomer().getAccount(), LocalDate.now().plusMonths(1));
+                pays.add(p);
+            }
+        }
 
-        Order order = new Order(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), onlineUser.getCustomer().getAddress(), OrderStatus.New, quantilyInt, onlineUser.getCustomer().getAccount());
+        order.setTotal(total);
+        Account ac = onlineUser.getCustomer().getAccount();
+        ac.setBalance(ac.getBalance() - (int)total);
+        pSell.setBalance(seller.getBalance()+(int)total);
 
-        objects.put(objectId, order);
-        objectId++;
+        addObject(order);
+        orderHashMap.put(order.getNumber(),order);
+        for (LineItem li:items) {
+            addObject(li);
+            LineItemsList.add(li);
+        }
+        for (Payment pa:pays) {
+            addObject(pa);
+            paymentHashMap.put(pa.getId(),pa);
+        }
 
-        //LineItem lineItem = new LineItem(quantilyInt, 666, sell.getShoppingCart(), order, );
-
-        onlineUser.getCustomer().getAccount().addOrder(order);
-
-        System.out.println("Would you want to buy more? (yes or no)");
-        String anser = in.nextLine();
-    }}
+        System.out.println("Thank you for shopping");
+    }
 
     public static void displayOrder(){
         if(onlineUser == null){
@@ -357,16 +444,31 @@ public class Main {
             System.out.println("Product "+id+" already connected to a Premium account");
             return false;
         }
+        Scanner in=new Scanner(System.in);
+        String command="";
+        System.out.println("Choose price for the product:");
+        command = in.nextLine();
+        int price = 1;
+        try {
+            price=Integer.parseInt(command);
+        }catch (NumberFormatException e){
+            System.out.println("Since you didnt write numbers we decided it will be: 1");
+        }
+        product.setPrice(price);
+
+        System.out.println("Choose quantity for the product:");
+        command = in.nextLine();
+        int quantity = 100;
+        try {
+            quantity=Integer.parseInt(command);
+        }catch (NumberFormatException e){
+            System.out.println("Since you didnt write numbers we decided it will be: 100");
+        }
+        product.setQuantity(quantity);
         ((PremiumAccount)onlineUser.getCustomer().getAccount()).addProduct(product);
         return true;
 
-        /*
-        if(onlineUser.isPremiumAccount()){
-            onlineUser.addProductToPremium((Product)objects.get(Integer.parseInt(id)));
-            return true;
-        }
-        return false;
-        */
+
     }
 
     public static boolean addProduct(String id, String name, String supplier_id){
@@ -400,27 +502,6 @@ public class Main {
         objects.keySet().removeIf(o -> (objects.get(o) instanceof Product)&&(((Product)objects.get(o)).getSupplier() == null));
         objects.keySet().removeIf(o -> (objects.get(o) instanceof LineItem)&&(((LineItem)objects.get(o)).getProduct() == null));
 
-
-        /*
-        if(productHashMap.containsKey(name)){
-            Product product = productHashMap.get(name);
-            ArrayList<LineItem> lineitems = product.getLineItems();
-            for (LineItem i : lineitems) {
-                i.getShoppingCart().removeLineItem(i);
-                i.getOrder().removeLineItem(i);
-                i.setProduct(null);
-                LineItemsList.remove(i);
-            }
-            product.setLineItems(null);
-            product.getSupplier().getProducts().remove(name);
-            if(product.getPremuimAccount() != null)
-                product.getPremuimAccount().getProducts().remove(product);
-            productHashMap.remove(name);
-            return true;
-        }
-        else
-            return false;
-            */
         return true;
     }
 
@@ -433,26 +514,6 @@ public class Main {
             System.out.println();
         }
 
-        /*
-        for (Supplier s : supplierHashMap.values())
-            s.toString();
-        for (Product p : productHashMap.values())
-            p.toString();
-        for (Account a : accountHashMap.values())
-            a.toString();
-        for (Payment p : paymentHashMap.values())
-            p.toString();
-        for (Customer c : customerHashMap.values())
-            c.toString();
-        for (WebUser w : webUserHashMap.values())
-            w.toString();
-        for (Order o : orderHashMap.values())
-            o.toString();
-        for (ShoppingCart s : shoppingCarts)
-            s.toString();
-        for (LineItem l : LineItemsList)
-            l.toString();
-       */
     }
 
     public static void displaySpecificObject(String id){

@@ -32,7 +32,7 @@ public class LineItem {
         this.price = price;
         this.shoppingCart = shoppingCart;
         this.shoppingCart.addLineItem(this);
-        this.order = order;
+        //this.order = order;
         boolean o = order.addLineItem(this);
         
         this.product = product;
@@ -62,15 +62,18 @@ public class LineItem {
 
     public boolean removeItem() {
         if (order != null){
-            order.getLineArray().remove(this);
+            if (order.getLineArray() != null)
+                order.getLineArray().remove(this);
             order = null;
         }
         if (shoppingCart != null){
-            shoppingCart.getLineItems().remove(this);
+            if (shoppingCart.getLineItems() != null)
+                shoppingCart.getLineItems().remove(this);
             shoppingCart = null;
         }
         if (product != null){
-            product.getLineItems().remove(this);
+            if (product.getLineItems() != null)
+                product.getLineItems().remove(this);
             product = null;
         }
         return true;
@@ -78,12 +81,12 @@ public class LineItem {
     
     @Override
     public String toString() {
-        return "LineItem";
+        return "LineItem: "+product.getName();
     }
     
     public void printLineItem() {
-        System.out.println("Quantity:"+quantity);
-        System.out.println("Price:"+price);
+        System.out.println("Quantity: "+quantity);
+        System.out.println("Price: "+price);
         System.out.println(product);
         System.out.println(order);
         System.out.println(shoppingCart);

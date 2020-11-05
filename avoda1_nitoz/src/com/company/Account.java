@@ -53,15 +53,57 @@ public class Account {
         orders=new ArrayList<>();
         shoppingCart = new ShoppingCart(Calendar.getInstance().getTime(), this, customer.getWebUser());
         lastOrder = null;
-        /*if(shoppingCart.getAccount()==null && customer.getAccount()==null){
-            this.shoppingCart = shoppingCart;
-            this.customer = customer;
-        }
-        else{
-            throw new RuntimeException("Account can only be connected to one shopping cart and one customer");
-        }*/
+
     }
-    
+
+    public boolean isIs_closed() {
+        return is_closed;
+    }
+
+    public Date getOpen() {
+        return open;
+    }
+
+    public Date getClosed() {
+        return closed;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public ArrayList<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setBilling_address(String billing_address) {
+        this.billing_address = billing_address;
+    }
+
+    public void setIs_closed(boolean is_closed) {
+        this.is_closed = is_closed;
+    }
+
+    public void setOpen(Date open) {
+        this.open = open;
+    }
+
+    public void setClosed(Date closed) {
+        this.closed = closed;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public void setPayments(ArrayList<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = orders;
+    }
+
     public void addPayment(Payment p){
         if(p.getAccount()==this){
             payments.add(p);
@@ -121,7 +163,6 @@ public class Account {
         System.out.println("Balance: "+balance);
         System.out.println("is closed: "+is_closed);
         System.out.println("Open: "+open);
-        System.out.println("Closed: "+closed);
         System.out.println(shoppingCart);
         System.out.println(customer);
         for(Order o :orders){
